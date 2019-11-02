@@ -30,7 +30,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/user', require('./routes/user'));
+app.use('/student', require('./routes/student'));
 
 app.listen(port, () => {
     console.log(`app is listening on port ${port}`);
