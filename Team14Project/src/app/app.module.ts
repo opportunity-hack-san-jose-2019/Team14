@@ -10,11 +10,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProfilePageComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,

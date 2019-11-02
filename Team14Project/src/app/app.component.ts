@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import axios from 'axios';
 
 @Component({
   selector: 'app-root',
@@ -6,18 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  appName = 'Braven';
-
-  isVolunteer = false;
-  isRegistering = true;
-
-  firstName = '';
-  lastName = '';
-  email = '';
-  password = '';
-
-
-  toggleRegistration() {
-    this.isRegistering = !this.isRegistering;
-  }
+  
 }
