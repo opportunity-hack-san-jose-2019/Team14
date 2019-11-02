@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

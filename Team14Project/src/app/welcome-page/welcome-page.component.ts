@@ -38,7 +38,7 @@ export class WelcomePageComponent implements OnInit {
       email: this.email
     }
 
-    axios.post('http://localhost:8080/student/register', student)
+    axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
       .then(response => console.log(response.data));
 
     console.log(student);
