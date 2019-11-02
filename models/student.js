@@ -4,7 +4,8 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 const StudentSchema = {
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -17,6 +18,9 @@ const StudentSchema = {
     last: {
         type: String,
         required: true
+    },
+    full_name: {
+        type: String,
     },
     cohort: {
         type: String,

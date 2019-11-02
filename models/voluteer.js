@@ -4,7 +4,8 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 const VoluteerSchema = {
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
