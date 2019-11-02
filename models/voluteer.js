@@ -13,11 +13,12 @@ const VoluteerSchema = {
     },
     first: {
         type: String,
-        required: true
     },
     last: {
         type: String,
-        required: true
+    },
+    full_name: {
+        type: String,
     },
     phone: {
         type: String
