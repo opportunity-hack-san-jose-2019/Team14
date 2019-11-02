@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Student } = require('../models/Student');
+const { Student } = require('../models/student');
 
 router.get('/', (req, res) => {
     console.log('students');
@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/all', (req, res) => {
+    console.log(req);
     Student.find().then((students) => {
       res.send({students});
     }).catch((e) =>{
