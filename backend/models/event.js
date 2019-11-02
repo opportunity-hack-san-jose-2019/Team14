@@ -11,10 +11,10 @@ const EventSchema = {
         required: true
     },
     students: {
-        type: Array, // ItemSchema = {StudentId, SkillId}
+        type: Array, // ItemSchema = {StudentId, SkillId, Status}
     },
     voluteers: {
-        type: Array, // ItemSchema = {VoluteerId, SkillId}
+        type: Array, // ItemSchema = {VoluteerId, SkillId, Status}
     },
 };
 
