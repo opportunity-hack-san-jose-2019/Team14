@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  appName = 'Braven'
+  appName = 'Braven';
+
+  isVolunteer = false;
+  isRegistering = true;
+
+  firstName = '';
+  lastName = '';
+  email = '';
+  password = '';
+
+
+  toggleRegistration() {
+    this.isRegistering = !this.isRegistering;
+  }
 }
