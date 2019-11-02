@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/all', (req, res) => {
-    console.log(req);
     Student.find().then((students) => {
       res.send({students});
     }).catch((e) =>{
