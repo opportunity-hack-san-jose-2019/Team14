@@ -59,4 +59,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
+  <h1 class="text-center">A list of volunteers ({{volunteers.length}})</h1>
+
+  <ul>
+    <button mat-button *ngFor="let volunteer of volunteers" (click)="showVolunteerInfo(volunteer);">
+      {{ volunteer.email.split(" ")[0] }}
+    </button>
+  </ul>
+
 </div>
