@@ -4,7 +4,8 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 const VoluteerSchema = {
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -12,11 +13,12 @@ const VoluteerSchema = {
     },
     first: {
         type: String,
-        required: true
     },
     last: {
         type: String,
-        required: true
+    },
+    full_name: {
+        type: String,
     },
     phone: {
         type: String
@@ -42,16 +44,10 @@ const VoluteerSchema = {
     employer: {
         type: String,
     },
-    title: {
+    title_industry: {
         type: String,
     },
-    industry: {
-        type: String,
-    },
-    city: {
-        type: String,
-    },
-    state: {
+    city_state: {
         type: String,
     },
     career_fields: {

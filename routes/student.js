@@ -17,10 +17,21 @@ router.get('/all', (req, res) => {
 
 router.post('/register', (req, res) => {
     let student = new Student({
+        full_name: req.body.full_name,
         first: req.body.first,
         last: req.body.last,
         password: req.body.password,
-        email: req.body.email
+        email: req.body.email,
+        cohort: req.body.cohort,
+        interests: req.body.interests,
+        evening: req.body.evening,
+        location: req.body.location,
+        phone: req.body.phone,
+        attendance: req.body.attendance,
+        module_score: req.body.module_score,
+        project_score: req.body.project_score,
+        bonus: req.body.bonus,
+        total_score: req.body.total_score
     });
     student.save().then((student) => {
         res.send({student});
@@ -28,7 +39,6 @@ router.post('/register', (req, res) => {
         res.status(400).send();
     });
 });
-
 
 router.post('/signin', (req, res) => {
     Student.findOne({
