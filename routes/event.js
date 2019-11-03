@@ -63,6 +63,7 @@ router.get('/attending', (req, res) => {
         Volunteer.findOne({
             email: req.query.email,
         }).then((volunteer) => {
+            console.log(volunteer)
             eventIds = []
             for (let i = 0; i < volunteer.event_list.length; i++) {
                 eventIds.push(volunteer.event_list[i]);
@@ -214,7 +215,6 @@ router.post('/remove', (req, res) => {
 
 router.post('/join', (req, res) => {
     var { event_id, user_role, user_email } = req.body;
-    
     if (event_id === undefined || user_role === undefined || user_email === undefined){
         return res.status(404).send({
             error: "1.Unable to join"
