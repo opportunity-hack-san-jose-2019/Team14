@@ -11,8 +11,7 @@ import {
 import axios from 'axios';
 
 import {
-  Router,
-  ActivatedRoute
+  Router
 } from '@angular/router';
 
 import {
@@ -30,13 +29,8 @@ import {
 export class ProfilePageComponent implements OnInit {
 
   // Data for displaying
-  @ViewChild('eventTable', {
-    static: false
-  }) eventTable: MatTable < any > ;
-  @ViewChild('interestTable', {
-    static: false
-  }) interestTable: MatTable < any > ;
-
+  @ViewChild('eventTable', {static: false}) eventTable: MatTable<any> ;
+  @ViewChild('interestTable', {static: false}) interestTable: MatTable<any> ;
 
   user: any;
   isVolunteer = false;

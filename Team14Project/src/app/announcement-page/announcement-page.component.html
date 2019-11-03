@@ -1,7 +1,9 @@
 <app-toolbar pageName="Announcements - {{currentUser.full_name}}"> </app-toolbar>
 
 <h1 class="text-center">List of Upcoming Events ({{eventList.length}})</h1>
-<table #eventTable mat-table [dataSource]="eventList" style="margin: 0px auto;">
+
+<h2 class="text-center" *ngIf="eventList.length == 0">No upcoming events yet</h2>
+<table *ngIf="eventList.length != 0" #eventTable mat-table [dataSource]="eventList" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Event title </th>

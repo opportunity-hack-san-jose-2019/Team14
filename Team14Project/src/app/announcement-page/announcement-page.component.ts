@@ -52,17 +52,17 @@ import Axios from 'axios';
     }
   
     joinEvent(event) {
-      console.log(this.currentUser)
+      this.eventList.splice(this.eventList.indexOf(event), 1);
+      this.eventTable.renderRows();
       Axios.post('https://obscure-badlands-88487.herokuapp.com/event/join', {
         event_id: event._id, 
         user_role: this.currentUser.vip ? 'volunteers' : 'students', 
         user_email: this.currentUser.email
       })
       .then((events) => {
-        this.getEvents()
+        console.log(events);
       }).catch((e) => {
         console.log(e)
-        this.getEvents()
       });
     }
   }
