@@ -21,7 +21,6 @@ import Axios from 'axios';
   export class EventDetailPageComponent implements OnInit {
   
     @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
-    currentUser : Object;
     eventList: [Object]
     displayedColumns: string[] = ['round', 'interviewer'];
     currentUser : any
