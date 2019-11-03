@@ -8,6 +8,9 @@ const NotificationSchema = {
     description: {
         type: String,
     },
+    time: {
+        type: Date
+    },
     type: {
         type: String,
     },

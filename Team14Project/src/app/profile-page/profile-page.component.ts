@@ -50,7 +50,7 @@ export class ProfilePageComponent implements OnInit {
   interestScale = 0;
 
   // Table columns
-  displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
+  displayedColumns: string[] = ['title', 'location', 'description', 'time', 'details', 'action'];
 
   // Interest columns
   interestColumns: string[] = ['skill_name', 'skill_level'];
@@ -58,13 +58,14 @@ export class ProfilePageComponent implements OnInit {
   // Interest list
   interestList = [];
 
+  // Attending Events list
+  attendingEventsList = []
+
   constructor(private router: Router, private userService: UserService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.userService.getCurrentUser()
       .then(userObject => {
-        this.user = userObject;
-        console.log(userObject);
         for (var i = 0; i < this.user.event_list.length; i++) {
           axios.get('https://obscure-badlands-88487.herokuapp.com/event/info', {
             params: {
@@ -75,8 +76,10 @@ export class ProfilePageComponent implements OnInit {
             this.eventTable.renderRows();
           });   
         }
-      })
-      .catch(err => console.warn(err));
+        
+        this.user = userObject
+        this.getAttendingEvents();
+      }).catch(err => this.router.navigateByUrl('/'));
 
     axios.get('https://obscure-badlands-88487.herokuapp.com/skill/all')
       .then(response => {
@@ -88,6 +91,18 @@ export class ProfilePageComponent implements OnInit {
   logOut() {
     localStorage.clear();
     this.router.navigateByUrl('/');
+  }
+
+  getAttendingEvents() {
+    console.log(this.user)
+    let userRole = this.userService.isStudent(this.user) ? 'students' : 'volunteers'
+    axios.get(`http://localhost:8080/event/attending?email=${this.user.email}&role=${userRole}`)
+      .then((events) => {
+        this.attendingEventsList = events.data;
+        console.log(events)
+      }).catch((e) => {
+        console.log(e)
+      });
   }
 
   getAuth() {

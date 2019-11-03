@@ -39,6 +39,44 @@ router.get('/upcoming', (req, res) => {
     });
 });
 
+router.get('/attending', (req, res) => {
+    let userRole = req.query.role
+    
+    if (userRole === 'students') {
+        Student.findOne({
+            email: req.query.email,
+        }).then((student) => {
+            eventIds = []
+            for (let i = 0; i < student.event_list.length; i++) {
+                eventIds.push(student.event_list[i]);
+            }
+            Event.find({
+                '_id': { $in: eventIds}
+            }).then(events => {
+                res.send(events);
+            });
+        }).catch((e) => {
+            res.status(404).send(e);
+        })
+    } else {
+        Volunteer.findOne({
+            email: req.query.email,
+        }).then((volunteer) => {
+            eventIds = []
+            for (let i = 0; i < volunteer.event_list.length; i++) {
+                eventIds.push(volunteer.event_list[i]);
+            }
+            Event.find({
+                '_id': { $in: eventIds}
+            }).then(events => {
+                res.send(events);
+            });
+        }).catch((e) => {
+            res.status(404).send(e);
+        })
+    }
+});
+
 router.get('/info', (req, res) => {
     Event.findOne({
         _id: req.query.id,
@@ -90,27 +128,56 @@ router.post('/update', (req, res) => {
     })
 });
 
+router.post('/addpair', (req, res) => {
+    const { id, round, volunteer_email, student_email } = req.body;
+    Event.findOne({
+        _id: id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+        if (!event.pairing){
+            event.pairing = [];
+        }
+        event.pairing.push({
+            round,
+            volunteer_email,
+            student_email
+        });
+        event.save().then((event) => {
+            res.send({event});
+        }).catch((e) => {
+            res.status(404).send(e);
+            console.log(e)
+        });
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 router.post('/join', (req, res) => {
     var { event_id, user_role, user_email } = req.body;
     
     if (event_id === undefined || user_role === undefined || user_email === undefined){
         return res.status(404).send({
-            error: "Unable to join"
+            error: "1.Unable to join"
         });
     }
 
-    var eventUpdatePromise = Event.findOne({
+    Event.findOne({
         _id: event_id,
     }).then((event) => {
         if (!event) {
-            res.status(404).send({
-                error: "Unable to join"
+            return res.status(404).send({
+                error: "2.Unable to join"
             });
         }
         var user_list = user_role === "students" ? event.students : event.volunteers;
         if (_.find(user_list, {email: user_email})) {
-            res.status(400).send({
-                error: "Unable to join"
+            return res.status(404).send({
+                error: "3.Unable to join"
             });
         } else {
             user_list.push({
@@ -123,29 +190,64 @@ router.post('/join', (req, res) => {
                 event = _.assign(event, {"volunteers": user_list})
             }
             
-            event.save().then(event => {
+            var doneSaveDB = event.save().then(event => {
                 var userModel = user_role === "students" ? Student : Volunteer;
-                userModel.findOne({
+                return userModel.findOne({
                     email: user_email,
                 }).then((user) => {
                     if (!user) {
-                        res.status(404).send({
-                            error: "Unable to join"
-                        });
+                        return Promise.reject(new Error("4. Unable to join"));
                     }
                     var { event_list } = user;
                     if (event_list.includes(event_id)){
-                        res.status(404).send(e);
+                        return Promise.reject(new Error("5. Unable to join"));
                     }
                     event_list.push(event_id);
                     user = _.assign(user, {
                         event_list
                     });
-                    user.save().then(user => res.send({user}));
+                    return user.save();
                 }).catch((e) => {
-                    return res.status(404).send(e)
+                    return Promise.reject(e);
                 })
             });
+
+            doneSaveDB.then(() => {
+                var eventGoogle = {
+                    'summary': event.title,
+                    'location': event.location,
+                    'description': event.description,
+                    'start': {
+                      'dateTime': event.start,
+                      'timeZone': 'America/Los_Angeles',
+                    },
+                    'end': {
+                      'dateTime': event.end,
+                      'timeZone': 'America/Los_Angeles',
+                    },
+                    'attendees': [{'email':user_email}],
+                    'reminders': {
+                      'useDefault': false,
+                      'overrides': [
+                        {'method': 'email', 'minutes': 24 * 60},
+                        {'method': 'popup', 'minutes': 10},
+                      ],
+                    },
+                };
+        
+                return send_calendar(eventGoogle, (err, eventRes) => {
+                    if (err){
+                        return Promise.reject(err)
+                    }
+                    else{
+                        return Promise.resolve(eventRes);
+                    }
+                });
+            }).then(eventRes => {
+                res.send({"status":"Success", "eventObject":eventRes});
+            }).catch(e => {
+                res.status(404).send({"status":"Fail", "message":'2 '+e.message});
+            })
         }
     }).catch((e) => {
         res.status(404).send(e);
@@ -169,6 +271,7 @@ router.post('/sendinvitations', (req, res) => {
             let notification = new Notification({
                 title: "You have been invited to participate in "+title,
                 description,
+                time: Date.now(),
                 type: "Event Invitation",
                 event_id,
                 user_email: email,
@@ -251,5 +354,7 @@ router.post('/acceptinvitation', (req, res) => {
         res.status(404).send(e);
     })
 });
+
+
 
 module.exports = router;
