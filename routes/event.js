@@ -8,6 +8,7 @@ const { send_calendar } = require('../google/send_calendar');
 const axios = require('axios');
 var Algorithmia = require("algorithmia");
 const _ = require('lodash');
+var ObjectId = require('mongodb').ObjectId;
 
 router.get('/', (req, res) => {
     console.log('events');
@@ -133,7 +134,7 @@ router.post('/update', (req, res) => {
 
 router.get('/pair', (req, res) => {
     Event.findOne({
-        _id: req.query.eventId,
+        _id: new ObjectId(idreq.query.eventId),
     }).then((event) => {
         if (!event) {
             return res.status(404).send({
