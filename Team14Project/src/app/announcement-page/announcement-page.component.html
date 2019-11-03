@@ -27,7 +27,7 @@
     <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="warn">Unregister</button>
+          <button mat-raised-button color="warn" (click)="joinEvent(element);">Join</button>
         </td>
       </ng-container>
   

@@ -50,7 +50,8 @@ router.post('/skill', (req, res) => {
     });
 });
 
-router.post('/skill', (req, res) => {
+router.post('/update', (req, res) => {
+    console.log('here')
     Volunteer.findOne({
         email: req.body.email,
     }).then((volunteer) => {
@@ -59,8 +60,9 @@ router.post('/skill', (req, res) => {
                 email: req.body.email
             }).then(student => {
                 var { skill_name, skill_level } = req.body;
-                req.body.interests = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],student.interests, "skill_name");
+                req.body.interests = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}], student.interests, "skill_name");
                 student = _.assign(student, req.body);
+                console.log(student)
                 student.save().then((student) => {
                     res.send({student});
                 }).catch((e) => {
@@ -70,17 +72,18 @@ router.post('/skill', (req, res) => {
             }).catch(e => {
                 res.status(404).send();
                 console.log(e)
-            })
+            });
+        } else {
+            var { skill_name, skill_level } = req.body;
+            req.body.career_fields = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],volunteer.career_fields, "skill_name");
+            volunteer = _.assign(volunteer, req.body);
+            volunteer.save().then((volunteer) => {
+                res.send({volunteer});
+            }).catch((e) => {
+                res.status(404).send();
+                console.log(e)
+            });
         }
-        var { skill_name, skill_level } = req.body;
-        req.body.career_fields = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],volunteer.career_fields, "skill_name");
-        volunteer = _.assign(volunteer, req.body);
-        volunteer.save().then((volunteer) => {
-            res.send({volunteer});
-        }).catch((e) => {
-            res.status(404).send();
-            console.log(e)
-        });
     }).catch((e) => {
         res.status(404).send(e);
     })
