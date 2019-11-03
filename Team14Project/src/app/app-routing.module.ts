@@ -3,16 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AnnouncementPageComponent } from './announcement-page/announcement-page.component'
 
 const routes: Routes = [
   {
     path: '', component: WelcomePageComponent
   },
   {
-    path: 'profilePage', component: ProfilePageComponent
+    path: 'profile', component: ProfilePageComponent
   },
   {
-    path: 'adminPage', component: AdminPageComponent
+    path: 'admin', component: AdminPageComponent
+  },
+  {
+    path: 'announcement', component: AnnouncementPageComponent
   }
 ];
 

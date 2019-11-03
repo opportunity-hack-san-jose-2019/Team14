@@ -12,7 +12,8 @@ import {
   
   @Component({
     selector: 'app-announcement-page',
-    templateUrl: './announcement-page.component.html'
+    templateUrl: './announcement-page.component.html',
+    styleUrls: ['../toolbar/toolbar.component.css']
   })
   
   export class AnnouncementPageComponent implements OnInit {

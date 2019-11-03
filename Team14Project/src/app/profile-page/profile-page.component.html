@@ -1,10 +1,5 @@
-<mat-toolbar color="primary">
-  {{ user.email }} -
-
-  {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}
-  <span class="spacer"></span>
-  <button mat-button (click)="logOut();">Log Out</button>
-</mat-toolbar>
+<app-toolbar pageName="{{user.email}} - {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}"color="primary">
+</app-toolbar>
 
 <div>
 
@@ -18,7 +13,7 @@
 
   <h1 class="text-center">List of interests ({{user.interests.length}})</h1>
 
-  <div *ngIf="user.interests.length == 0" class="text-center">
+  <div *ngIf="user.interests === undefined || user.interests.length == 0" class="text-center">
     <h3 class="text-center">Oops, no interests yet</h3>
   </div>
 

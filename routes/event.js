@@ -3,6 +3,7 @@ const router = express.Router();
 const { Event } = require('../models/event');
 const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
+const { send_calendar } = require('../google/send_calendar');
 const _ = require('lodash');
 
 router.get('/', (req, res) => {
@@ -124,6 +125,34 @@ router.post('/join', (req, res) => {
         res.status(404).send({status:"Failed", message:e.message});
         console.log(e)
     })
+});
+
+router.get('/test-google', (req, res) => {
+    var event = {
+        'summary': 'Google I/O 2015',
+        'location': '800 Howard St., San Francisco, CA 94103',
+        'description': 'A chance to hear more about Google\'s developer products.',
+        'start': {
+          'dateTime': '2019-11-20T09:00:00-07:00',
+          'timeZone': 'America/Los_Angeles',
+        },
+        'end': {
+          'dateTime': '2019-11-20T17:00:00-07:00',
+          'timeZone': 'America/Los_Angeles',
+        },
+        'attendees': [
+          {'email': 'binanhphuoc@gmail.com'}
+        ],
+        'reminders': {
+          'useDefault': true,
+        //   'overrides': [
+        //     {'method': 'email', 'minutes': 24 * 60},
+        //     {'method': 'popup', 'minutes': 10},
+        //   ],
+        },
+      };
+    
+    send_calendar(event);
 });
 
 module.exports = router;
