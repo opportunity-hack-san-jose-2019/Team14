@@ -198,6 +198,7 @@ router.post('/sendinvitations', (req, res) => {
               ],
             },
         };
+        
         send_calendar(event, (err, eventRes) => {
             if (err){
                 res.send({"status":"Fail", "message":e.message});

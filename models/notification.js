@@ -1,17 +1,31 @@
 const mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const NotificationSchema = {
     title: {
         type: String,
-        required: true
     },
-    message: {
+    description: {
         type: String,
-        required: true
     },
-    metadata: {
-        type: Object,
+    type: {
+        type: String,
     },
+    event_id: {
+        type: ObjectId
+    },
+    user_role: {
+        type: String
+    },
+    user_email: {
+        type: String
+    },
+    seen: {
+        type: Boolean
+    },
+    checked: {
+        type: Boolean,
+    }
 };
 
 var Notification = mongoose.model('Notification', NotificationSchema);
