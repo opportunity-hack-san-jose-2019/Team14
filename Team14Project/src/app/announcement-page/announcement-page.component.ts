@@ -22,21 +22,25 @@ import Axios from 'axios';
   
     @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
     currentUser : Object;
-    eventList: []
+    eventList: [Object]
+    displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
     constructor(private router: Router, private userService: UserService) {
-      this.eventList = []
+      this.eventList = [{
+        title: 'event',
+        description: 'cool',
+        location: 'cali',
+        time: 'time'
+      }]
     }
   
     ngOnInit() {
       this.userService.getCurrentUser().then((user) => {
-        console.log(user)
         this.currentUser = user
       });
 
       Axios.get('https://obscure-badlands-88487.herokuapp.com/event/upcoming')
       .then((events) => {
-        console.log(events);
         this.eventList = events.data;
       }).catch((e) => {
         console.log(e)
