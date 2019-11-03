@@ -20,18 +20,21 @@
 
   <div *ngIf="user.interests.length == 0" class="text-center">
     <h3 class="text-center">Oops, no interests yet</h3>
-    <button mat-raised-button color="primary"
-      (click)="isAddingInterest = !isAddingInterest">{{ isAddingInterest ? 'Cancel' : 'Add Interest' }}</button>
+  </div>
 
-    <div *ngIf="isAddingInterest">
-      <mat-form-field class="example-full-width">
-        <input [(ngModel)]="interestName" matInput placeholder="Interest">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input [(ngModel)]="interestScale" matInput type="number" min="0" max="10" placeholder="Skill scale">
-      </mat-form-field>
-      <button mat-raised-button color="danger" (click)="addInterest();">Add</button>
-    </div>
+  <div class="text-center">
+    <button mat-raised-button class="text-center" color="primary"
+      (click)="isAddingInterest = !isAddingInterest">{{ isAddingInterest ? 'Cancel' : 'Add Interest' }}</button>
+  </div>
+
+  <div class="text-center" *ngIf="isAddingInterest">
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="interestName" matInput placeholder="Interest">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="interestScale" matInput type="number" min="0" max="10" placeholder="Skill scale">
+    </mat-form-field>
+    <button mat-raised-button color="danger" (click)="addInterest();">Add</button>
   </div>
 
   <ul class="text-center">
