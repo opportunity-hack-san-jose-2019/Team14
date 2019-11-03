@@ -80,14 +80,14 @@ export class ProfilePageComponent implements OnInit {
 
     console.log(interest);
 
-    axios.post('https://obscure-badlands-88487.herokuapp.com/skill/skill', interest)
-      .then(response => console.log(response));
+    axios.post('http://localhost:8080/skill/update', interest)
+      .then(response => {
+        this.userService.getCurrentUser().then(userObj => this.user = userObj).catch(err => this.router.navigateByUrl('/'));
+      });
     
     this.interestScale = 0;
     this.interestName = '';
 
     this.isAddingInterest = !this.isAddingInterest;
-
-    console.log(this.interestList);
   }
 }

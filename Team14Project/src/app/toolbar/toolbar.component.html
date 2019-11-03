@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
     {{pageName}}
     <span class="spacer"></span>
+    <button mat-button (click)="router.navigateByUrl('/announcement');">Announcements</button>
+    <button mat-button (click)="router.navigateByUrl('/profile');">Profile</button>
     <button mat-button (click)="logOut();">Log Out</button>
   </mat-toolbar>
