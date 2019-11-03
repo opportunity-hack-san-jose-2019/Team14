@@ -14,6 +14,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { AnnouncementPageComponent } from './announcement-page/announcement-page.component'
+import { EventDetailPageComponent } from './event-detail-page/event-detail-page.component'
 import { MatTableModule } from '@angular/material/table';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -32,7 +33,8 @@ import { UserService } from './services/user.service'
     WelcomePageComponent,
     AdminPageComponent,
     ToolbarComponent,
-    AnnouncementPageComponent
+    AnnouncementPageComponent,
+    EventDetailPageComponent
   ],
   imports: [
     BrowserModule,
