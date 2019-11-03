@@ -1,25 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-
-import {
-  MatTable
-} from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material/table';
 
 import axios from 'axios';
 
-import {
-  Router
-} from '@angular/router';
+import { Router } from '@angular/router';
 
-import {
-  UserService
-} from './../services/user.service';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { UserService } from './../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile-page',
@@ -29,12 +16,8 @@ import {
 export class ProfilePageComponent implements OnInit {
 
   // Data for displaying
-  @ViewChild('eventTable', {
-    static: false
-  }) eventTable: MatTable < any > ;
-  @ViewChild('interestTable', {
-    static: false
-  }) interestTable: MatTable < any > ;
+  @ViewChild('eventTable', {static: false}) eventTable: MatTable<any>;
+  @ViewChild('interestTable', {static: false}) interestTable: MatTable<any>;
 
   user: any;
   isVolunteer = false;

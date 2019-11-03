@@ -1,18 +1,7 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
-import {
-  Router, NavigationExtras
-} from '@angular/router';
-import {
-  state
-} from '@angular/animations';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-welcome-page',
