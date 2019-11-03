@@ -33,7 +33,7 @@ const StudentSchema = {
         type: String
     },
     interests: {
-        type: [String]
+        type: [Object]
     },
     attendance: {
         type: Number,
