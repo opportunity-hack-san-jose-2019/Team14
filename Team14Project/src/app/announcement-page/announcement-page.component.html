@@ -1,8 +1,8 @@
 <app-toolbar pageName="Announcements - {{currentUser.full_name}}"> </app-toolbar>
 
-<h1 class="text-center">List of interests</h1>
+<h1 class="text-center">List of Upcoming Events</h1>
 
-<table #eventTable mat-table [dataSource]="user.event_list" style="margin: 0px auto;">
+<table #eventTable mat-table [dataSource]="event_list" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Event title </th>
@@ -22,7 +22,7 @@
 
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef>Event time</th>
-      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
