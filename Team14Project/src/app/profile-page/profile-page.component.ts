@@ -38,10 +38,11 @@ export class ProfilePageComponent implements OnInit {
   }) interestTable: MatTable < any > ;
 
 
-  user: Object;
+  user: any;
   isVolunteer = false;
   appName = 'Braven';
   objectKeys = Object.keys;
+  events = [];
 
   // Adding interests
   isAddingInterest = false;
@@ -61,13 +62,27 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getCurrentUser()
-      .then(userObject => this.user = userObject)
-      .catch(err => this.router.navigateByUrl('/'));
+      .then(userObject => {
+        this.user = userObject;
+        console.log(userObject);
+        for (var i = 0; i < this.user.event_list.length; i++) {
+          axios.get('https://obscure-badlands-88487.herokuapp.com/event/info', {
+            params: {
+              id: this.user.event_list[i]
+            }
+          }).then(response => {
+            this.events.push(response.data);
+            this.eventTable.renderRows();
+          });   
+        }
+      })
+      .catch(err => console.warn(err));
 
     axios.get('https://obscure-badlands-88487.herokuapp.com/skill/all')
       .then(response => {
         this.interestList = response.data.skill;
       });
+
   }
 
   logOut() {

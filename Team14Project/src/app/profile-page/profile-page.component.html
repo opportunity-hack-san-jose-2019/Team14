@@ -1,28 +1,20 @@
-<app-toolbar pageName="{{user.full_name}} - {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}" color="primary">
+<app-toolbar pageName="{{user.full_name}} - {{ user.interests === undefined ? 'Volunteer profile' : 'Member profile' }}" color="primary">
 </app-toolbar>
 
 <div>
 
-  <!-- <h1 class="text-center">Your information</h1>
+  <h1 class="text-center" *ngIf="user.interests != undefined">List of interests ({{user.interests.length}})</h1>
 
-  <ul class="text-center">
-    <li *ngFor="let item of objectKeys(user)" style="list-style: none;">
-        Your {{ item }} - <b>{{ user[item].length == 0 || user[item] == null ? 'None' : user[item]}}</b>
-    </li>
-  </ul> -->
-
-  <h1 class="text-center">List of interests ({{user.interests.length}})</h1>
-
-  <div *ngIf="user.interests === undefined || user.interests.length == 0" class="text-center">
+  <div *ngIf="user.interests !== undefined && user.interests.length == 0" class="text-center">
     <h3 class="text-center">Oops, no interests yet</h3>
   </div>
 
-  <div class="text-center">
+  <div class="text-center" *ngIf="user.interests !== undefined">
     <button mat-raised-button class="text-center" color="primary"
       (click)="isAddingInterest = !isAddingInterest">{{ isAddingInterest ? 'Cancel' : 'Add Interest' }}</button>
   </div>
 
-  <div class="text-center" *ngIf="isAddingInterest">
+  <div class="text-center" *ngIf="user.interests !== undefined && isAddingInterest">
     <mat-form-field class="example-full-width">
 
       <mat-label>Interest title</mat-label>
@@ -41,7 +33,7 @@
 
   <br>
 
-  <table #interestTable mat-table [dataSource]="user.interests" style="margin: 0px auto;">
+  <table *ngIf="user.interests !== undefined && user.interests.length != 0" #interestTable mat-table [dataSource]="user.interests" style="margin: 0px auto;">
 
     <ng-container matColumnDef="skill_name">
       <th mat-header-cell *matHeaderCellDef>Skill name</th>
@@ -60,8 +52,8 @@
 
   <hr>
 
-  <h1 class="text-center">Events you are participating in ({{ user.event_list.length }})</h1>
-  <table *ngIf="user.event_list != 0" #eventTable mat-table [dataSource]="user.event_list" style="margin: 0px auto;">
+  <h1 class="text-center">Events you are participating in ({{ events.length }})</h1>
+  <table *ngIf="events.length != 0" #eventTable mat-table [dataSource]="events" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Event title </th>
@@ -81,7 +73,7 @@
 
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef>Event time</th>
-      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.start}} </td>
     </ng-container>
 
 
