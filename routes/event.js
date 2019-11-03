@@ -170,11 +170,11 @@ router.post('/sendinvitations', (req, res) => {
             },
             'attendees': emails.map(item => ({'email':item})),
             'reminders': {
-              'useDefault': true,
-            //   'overrides': [
-            //     {'method': 'email', 'minutes': 24 * 60},
-            //     {'method': 'popup', 'minutes': 10},
-            //   ],
+              'useDefault': false,
+              'overrides': [
+                {'method': 'email', 'minutes': 24 * 60},
+                {'method': 'popup', 'minutes': 10},
+              ],
             },
         };
         send_calendar(event).then(event => {

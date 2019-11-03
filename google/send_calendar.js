@@ -82,6 +82,7 @@ function send_event(auth, event, callback) {
     auth: auth,
     calendarId: 'primary',
     resource: event,
+    sendNotifications: true
   }, callback);
 }
 
