@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 const { Event } = require('../models/event');
 const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
-const { send_calendar } = require('../google/send_calendar');
+const { g_calendar } = require('../google/send_calendar');
 const _ = require('lodash');
 
 router.get('/', (req, res) => {
@@ -195,12 +196,29 @@ router.post('/sendinvitations', (req, res) => {
               ],
             },
         };
-        send_calendar(event).then(event => {
-            console.log(event);
-            res.send({"status":"Success"});
-        }).catch(e => {
-            res.send({"status":"Fail", "message":e.message});
-            console.log(e);
+        g_calendar("send_event", event, (err, eventRes) => {
+            if (err){
+                res.send({"status":"Fail", "message":e.message});
+                console.log(e);
+            }
+            else {
+                event_metadata = {
+                    "id": eventFromDB._id, // Your channel ID.
+                    "type": "web_hook",
+                    "address": "https://obscure-badlands-88487.herokuapp.com/notifications", // Your receiving URL.
+                    "token": "target=myApp-myCalendarChannelDest", // (Optional) Your channel token.
+                    "expiration": 1426325213000 //
+                }
+                g_calendar("watch_event", event_metadata, (err, watchRes) => {
+                    if (err){
+                        res.send({"status":"Fail", "message":e.message});
+                        console.log(e);
+                    }
+                    else {
+                        res.send({"status":"Success", "event":eventRes, "watch":watchRes});
+                    }
+                })
+            }
         });
     }).catch((e) => {
         res.status(404).send(e);
