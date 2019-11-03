@@ -11,6 +11,7 @@ import {
   import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import Axios from 'axios';
+import { MatSnackBar } from '@angular/material/snack-bar';
   
   @Component({
     selector: 'app-announcement-page',
@@ -25,9 +26,9 @@ import Axios from 'axios';
     eventList: [Object]
     displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
-    API = "http://localhost:8080";
+    API = "https://obscure-badlands-88487.herokuapp.com";
 
-    constructor(private router: Router, private userService: UserService) {
+    constructor(private router: Router, private userService: UserService, private snackBar: MatSnackBar) {
       this.eventList = [{
         title: 'event',
         description: 'cool',
@@ -63,6 +64,7 @@ import Axios from 'axios';
       })
       .then((events) => {
         console.log(events);
+        this.snackBar.open('Success!', 'OK', {duration: 2000});
       }).catch((e) => {
         console.log(e)
       });
