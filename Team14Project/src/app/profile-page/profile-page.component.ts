@@ -66,6 +66,7 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser()
       .then(userObject => {
+        this.user = userObject;
         for (var i = 0; i < this.user.event_list.length; i++) {
           axios.get('https://obscure-badlands-88487.herokuapp.com/event/info', {
             params: {
@@ -74,10 +75,9 @@ export class ProfilePageComponent implements OnInit {
           }).then(response => {
             this.events.push(response.data);
             this.eventTable.renderRows();
-          });   
+          });
         }
-        
-        this.user = userObject
+
         this.getAttendingEvents();
       }).catch(err => this.router.navigateByUrl('/'));
 
@@ -128,7 +128,8 @@ export class ProfilePageComponent implements OnInit {
     } else {
       axios.post('https://obscure-badlands-88487.herokuapp.com/skill/update', interest)
         .then(response => {
-          this.userService.getCurrentUser().then(userObj => this.user = userObj).catch(err => this.router.navigateByUrl('/'));
+          this.userService.getCurrentUser().then(userObj => this.user = userObj)
+          .catch(err => this.router.navigateByUrl('/'));
         });
 
       this.interestScale = 0;

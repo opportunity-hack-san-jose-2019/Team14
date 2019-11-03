@@ -1,6 +1,6 @@
 <app-toolbar pageName="Announcements - {{currentUser.full_name}}"> </app-toolbar>
 
-<h1 class="text-center">List of Upcoming Events {{eventList.length}}</h1>
+<h1 class="text-center">List of Upcoming Events ({{eventList.length}})</h1>
 <table #eventTable mat-table [dataSource]="eventList" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">

@@ -19,7 +19,7 @@ export class UserService  {
                     console.warn(e)
                     return Promise.reject(e);
                 });
-            });
+            }); 
         }
     }
 
