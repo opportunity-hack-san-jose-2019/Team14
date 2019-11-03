@@ -59,4 +59,25 @@ router.post('/signin', (req, res) => {
     })
 });
 
+router.post('/update', (req, res) => {
+    Volunteer.findOne({
+        email: req.query.email,
+    }).then((volunteer) => {
+        if (!volunteer) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+        volunteer = _.assign(volunteer, req.body);
+        volunteer.save().then((volunteer) => {
+            res.send({volunteer});
+        }).catch((e) => {
+            res.status(400).send();
+            console.log(e)
+        });
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 module.exports = router;
