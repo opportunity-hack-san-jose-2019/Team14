@@ -17,3 +17,11 @@ body {
 .mat-checkbox-background {
   border: 2px solid #333;
 }
+
+.not-empty-select.mat-selected {
+  color: #333 !important;
+}
+
+.mat-select-value-text {
+  color: #333 !important;
+}

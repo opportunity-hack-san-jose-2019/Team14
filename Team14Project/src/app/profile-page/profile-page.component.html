@@ -1,4 +1,4 @@
-<app-toolbar pageName="{{user.email}} - {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}"color="primary">
+<app-toolbar pageName="{{user.email}} - {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}" color="primary">
 </app-toolbar>
 
 <div>
@@ -24,7 +24,14 @@
 
   <div class="text-center" *ngIf="isAddingInterest">
     <mat-form-field class="example-full-width">
-      <input [(ngModel)]="interestName" matInput placeholder="Interest">
+
+      <mat-label>Interest title</mat-label>
+      <mat-select style="color: #333;">
+        <mat-option *ngFor="let interest of interestList" [value]="interest.skill_name">
+          {{interest.skill_name}}
+        </mat-option>
+      </mat-select>
+
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <input [(ngModel)]="interestScale" matInput type="number" min="0" max="10" placeholder="Skill scale">
