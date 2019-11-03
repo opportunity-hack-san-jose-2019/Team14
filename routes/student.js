@@ -33,10 +33,14 @@ router.get('/profile', (req, res) => {
 
 router.post('/register', (req, res) => {
     interests_list = []
-    for (let i = 0; i < req.body.interests.length; i++) {
-        obj = JSON.parse(req.body.interests[i])
-        interests_list.push(obj)
+
+    if (req.body.interests !== undefined ) {
+        for (let i = 0; i < req.body.interests.length; i++) {
+            obj = JSON.parse(req.body.interests[i])
+            interests_list.push(obj)
+        }
     }
+    
     let student = new Student({
         full_name: req.body.full_name,
         first: req.body.first,
