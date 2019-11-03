@@ -176,7 +176,7 @@ router.get('/pair', (req, res) => {
                     }
                 }
                 event = _.assign(event, {"pairing": pairList})
-                event.save(event => {
+                event.save().then(event => {
                     res.send(event);
                 })
             });
