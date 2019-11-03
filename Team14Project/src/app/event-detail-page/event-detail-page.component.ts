@@ -61,6 +61,7 @@ import Axios from 'axios';
                 console.log(events.data[i])
             }
         }).catch((e) => {
+            console.log('here')
             console.log(e)
         });
     }

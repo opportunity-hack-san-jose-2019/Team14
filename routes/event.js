@@ -132,9 +132,8 @@ router.post('/update', (req, res) => {
 });
 
 router.get('/pair', (req, res) => {
-    var { event_id } = req.query.eventId;
     Event.findOne({
-        _id: event_id,
+        _id: req.query.eventId,
     }).then((event) => {
         if (!event) {
             return res.status(404).send({
