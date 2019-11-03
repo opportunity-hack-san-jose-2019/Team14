@@ -25,12 +25,19 @@ import {
 })
 export class ProfilePageComponent implements OnInit {
 
+  // Data for displaying
   @ViewChild('eventTable', { static: false }) eventTable: MatTable < any > ;
   user: Object;
   isVolunteer = false;
   appName = 'Braven';
   objectKeys = Object.keys;
 
+  // Adding interests
+  isAddingInterest = false;
+  interestName = '';
+  interestScale = 0;
+
+  // Table columns
   displayedColumns: string[] = ['title', 'location', 'time', 'action'];
 
   constructor(private router: Router) {}
