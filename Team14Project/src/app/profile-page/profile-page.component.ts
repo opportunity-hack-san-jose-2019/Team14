@@ -14,9 +14,6 @@ import {
   Router,
   ActivatedRoute
 } from '@angular/router';
-import {
-  Observable
-} from 'rxjs';
 
 @Component({
   selector: 'app-profile-page',
@@ -84,6 +81,8 @@ export class ProfilePageComponent implements OnInit {
       skill_name: this.interestName,
       skill_level: this.interestScale
     }
+
+    console.log(interest);
 
     axios.post('https://obscure-badlands-88487.herokuapp.com/volunteer/addeditskill', interest)
       .then(response => console.log(response));
