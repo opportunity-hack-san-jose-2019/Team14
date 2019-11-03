@@ -201,7 +201,7 @@ router.post('/sendinvitations', (req, res) => {
         };
         g_calendar("send_event", event, (err, eventRes) => {
             if (err){
-                res.send({"status":"Fail", "message":e.message});
+                res.status(404).send({"status":"Fail", "message":e.message});
                 console.log(e);
             }
             else {
@@ -214,7 +214,7 @@ router.post('/sendinvitations', (req, res) => {
                 }
                 g_calendar("watch_event", event_metadata, (err, watchRes) => {
                     if (err){
-                        res.send({"status":"Fail", "message":err.message});
+                        res.status(404).send({"status":"Fail", "message":err.message});
                         console.log(e);
                     }
                     else {
