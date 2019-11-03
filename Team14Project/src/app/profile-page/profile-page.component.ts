@@ -15,6 +15,8 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
+import { UserService } from './../services/user.service';
+
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -42,18 +44,12 @@ export class ProfilePageComponent implements OnInit {
   // Interest list
   interestList = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
-    axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', this.getAuth())
-      .then(response => {
-        if (response.status == 200) {
-          this.user = response.data;
-          console.log(response.data);
-        } else {
-          this.router.navigateByUrl('/');
-        }
-      });
+      this.userService.getCurrentUser()
+        .then(userObject => this.user = userObject)
+        .catch(err => this.router.navigateByUrl('/'));
 
     axios.get('https://obscure-badlands-88487.herokuapp.com/skill/all')
       .then(response => {

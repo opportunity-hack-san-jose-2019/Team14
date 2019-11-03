@@ -2,6 +2,7 @@ const express = require('express');
 const _ = require('lodash');
 const router = express.Router();
 const { Student } = require('../models/student');
+const { Volunteer } = require('../models/volunteer');
 
 router.get('/', (req, res) => {
     console.log('students');
@@ -71,14 +72,21 @@ router.post('/signin', (req, res) => {
         password: req.body.password
     }).then((student) => {
         if (!student) {
-            return res.status(404).send({
-                error: "User not found"
-            });
+            Volunteer.findOne({
+                email: req.body.email,
+                password: req.body.password
+            }).then((volunteer) => {
+                if (!volunteer) {
+                    res.status(404).send({"status":"Fail", "message":"User not found"});
+                }
+                else { res.send(volunteer); }
+            }).catch((e) => {
+                res.status(404).send({"status":"Fail", "message":e.message});
+            })
         }
-
-        res.send(student);
+        else { res.send(student); }
     }).catch((e) => {
-        res.status(404).send(e);
+        res.status(404).send({"status":"Fail", "message":e.message});
     })
 });
 
