@@ -165,7 +165,6 @@ router.post('/sendinvitations', (req, res) => {
         res.status(404).send(e);
     })
     
-    
     send_calendar(event);
 });
 
