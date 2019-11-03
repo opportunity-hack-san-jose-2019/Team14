@@ -2,6 +2,7 @@ const express = require('express');
 const _ = require('lodash');
 const router = express.Router();
 const { Student } = require('../models/student');
+const { Volunteer } = require('../models/volunteer');
 
 router.get('/', (req, res) => {
     console.log('students');
@@ -66,19 +67,40 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
-    Student.findOne({
+    var checkIfStudent = Student.findOne({
         email: req.body.email,
         password: req.body.password
     }).then((student) => {
         if (!student) {
-            return res.status(404).send({
-                error: "User not found"
-            });
+            return Promise.reject(new Error("User not found"));
         }
-
-        res.send(student);
+        student.role = "student";
+        return Promise.resolve(student);
     }).catch((e) => {
-        res.status(404).send(e);
+        return Promise.reject(e);
+    })
+
+    var checkIfVolunteer = Volunteer.findOne({
+        email: req.body.email,
+        password: req.body.password
+    }).then((volunteer) => {
+        if (!volunteer) {
+            return Promise.reject(new Error("User not found"));
+        }
+        volunteer.role = "volunteer";
+        return Promise.resolve(volunteer);
+    }).catch((e) => {
+        return Promise.reject(e);
+    })
+
+    checkIfStudent.then(student => {
+        res.send(student);
+    }).catch(e => {
+        checkIfVolunteer.then(voluteer => {
+            res.send(voluteer);
+        }).catch(e => {
+            res.status(404).send({"status": "Fail", "message":"User not found"})
+        })
     })
 });
 
