@@ -1,4 +1,5 @@
 const express = require('express');
+const _ = require('lodash');
 const router = express.Router();
 const { Student } = require('../models/student');
 
@@ -68,12 +69,13 @@ router.post('/update', (req, res) => {
                 error: "User not found"
             });
         }
-
-        student.update(req.body, e => {
-            return res.status(404).send({
-                error: "Error updating information."
-            });
-        })
+        student = _.assign(student, req.body);
+        student.save().then((student) => {
+            res.send({student});
+        }).catch((e) => {
+            res.status(400).send();
+            console.log(e)
+        });
     }).catch((e) => {
         res.status(404).send(e);
     })
