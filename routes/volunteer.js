@@ -120,7 +120,7 @@ router.post('/addeditskill', (req, res) => {
             });
         }
         var { skill_name, skill_level } = req.body;
-        req.body.career_fields = _.unionBy(volunteer.career_fields, [{skill_name, skill_level}], "skill_name");
+        req.body.career_fields = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],volunteer.career_fields, "skill_name");
         volunteer = _.assign(volunteer, req.body);
         volunteer.save().then((volunteer) => {
             res.send({volunteer});
