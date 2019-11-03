@@ -12,7 +12,7 @@ const contactListSchema = {
     students: {
         type: [ObjectId],
     },
-    voluteers: {
+    volunteers: {
         type: [ObjectId],
     },
 };

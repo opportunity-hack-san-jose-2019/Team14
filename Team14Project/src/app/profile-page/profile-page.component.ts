@@ -7,6 +7,7 @@ import {
 import {
   MatTable
 } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -18,7 +19,7 @@ export class ProfilePageComponent implements OnInit {
   @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
 
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -63,5 +64,9 @@ export class ProfilePageComponent implements OnInit {
     this.data.splice(this.data.indexOf(event), 1);
 
     this.eventTable.renderRows();
+  }
+
+  logOut() {
+    this.router.navigateByUrl('/');
   }
 }

@@ -46,7 +46,12 @@ export class WelcomePageComponent implements OnInit {
       });
     } else {
       axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
-      .then(response => console.log(response.data));
+      .then(response => console.log(response.data))
+      .catch(err => {
+        this.snackBar.open(err, 'OK', {
+          duration: 2000
+        });
+      });
     }
 
     console.log(student);

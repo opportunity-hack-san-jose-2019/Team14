@@ -1,4 +1,5 @@
 const express = require('express');
+const _ = require('lodash');
 const router = express.Router();
 const { Student } = require('../models/student');
 
@@ -52,6 +53,27 @@ router.post('/signin', (req, res) => {
         }
 
         res.send(student);
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
+router.post('/update', (req, res) => {
+    Student.findOne({
+        email: req.query.email,
+    }).then((student) => {
+        if (!student) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+        student = _.assign(student, req.body);
+        student.save().then((student) => {
+            res.send({student});
+        }).catch((e) => {
+            res.status(400).send();
+            console.log(e)
+        });
     }).catch((e) => {
         res.status(404).send(e);
     })

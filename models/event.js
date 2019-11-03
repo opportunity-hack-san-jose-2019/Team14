@@ -2,19 +2,29 @@ const mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const EventSchema = {
+    title: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
+    cover: {
+        type: String
+    },
+    media: {
+        type: [String]
+    },
     time: {
         type: Date,
-        required: true
     },
     location: {
         type: String,
-        required: true
     },
     students: {
-        type: Array, // ItemSchema = {StudentId, SkillId, Status}
+        type: [Object], // student_id, status
     },
-    voluteers: {
-        type: Array, // ItemSchema = {VoluteerId, SkillId, Status}
+    volunteers: {
+        type: [Object], // volunteer_id, status
     },
 };
 

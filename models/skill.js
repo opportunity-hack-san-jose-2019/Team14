@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const SkillSchema = {
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 }
 

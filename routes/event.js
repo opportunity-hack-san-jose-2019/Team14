@@ -16,12 +16,7 @@ router.get('/all', (req, res) => {
   });
 
 router.post('/register', (req, res) => {
-    career_list = []
-    for (let i = 0; i < req.body.career_fields.length; i++) {
-        obj = JSON.parse(req.body.career_fields[i])
-        career_list.push(obj)
-    }
-    let voluteer = new Voluteer({
+    let volunteer = new Volunteer({
         first: req.body.first,
         last: req.body.last,
         password: req.body.password,
@@ -37,7 +32,7 @@ router.post('/register', (req, res) => {
         employer: req.body.employer,
         title_industry: req.body.title_industry,
         city_state: req.body.city_state,
-        career_fields: career_list
+        career_fields: req.body.career_fields
     });
     volunteer.save().then((volunteer) => {
         res.send({volunteer});
@@ -59,27 +54,6 @@ router.post('/signin', (req, res) => {
         }
 
         res.send(volunteer);
-    }).catch((e) => {
-        res.status(404).send(e);
-    })
-});
-
-router.post('/update', (req, res) => {
-    Volunteer.findOne({
-        email: req.query.email,
-    }).then((volunteer) => {
-        if (!volunteer) {
-            return res.status(404).send({
-                error: "User not found"
-            });
-        }
-        volunteer = _.assign(volunteer, req.body);
-        volunteer.save().then((volunteer) => {
-            res.send({volunteer});
-        }).catch((e) => {
-            res.status(400).send();
-            console.log(e)
-        });
     }).catch((e) => {
         res.status(404).send(e);
     })
