@@ -29,7 +29,7 @@ export class WelcomePageComponent implements OnInit {
       axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', this.getAuth())
         .then(response => {
           if (response.status == 200) {
-            this.router.navigateByUrl('/profilePage');
+            this.router.navigateByUrl('/profile');
           }
         });
     }
@@ -100,7 +100,7 @@ export class WelcomePageComponent implements OnInit {
         if (response.status == 200) {
           localStorage.setItem('user', window.btoa(auth.email + ":" + auth.password));
 
-          this.router.navigateByUrl("/profilePage");
+          this.router.navigateByUrl("/profile");
         }
       })
       .catch(err => this.snackBar.open('Wrong credentials', 'OK', {
