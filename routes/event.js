@@ -38,7 +38,8 @@ router.post('/create', (req, res) => {
     let event = new Event({
         title: req.body.title,
         description: req.body.description,
-        time: req.body.time,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
         location: req.body.location,
     });
     event.save().then((event) => {
@@ -127,30 +128,43 @@ router.post('/join', (req, res) => {
     })
 });
 
-router.get('/test-google', (req, res) => {
-    var event = {
-        'summary': 'Google I/O 2015',
-        'location': '800 Howard St., San Francisco, CA 94103',
-        'description': 'A chance to hear more about Google\'s developer products.',
-        'start': {
-          'dateTime': '2019-11-20T09:00:00-07:00',
-          'timeZone': 'America/Los_Angeles',
-        },
-        'end': {
-          'dateTime': '2019-11-20T17:00:00-07:00',
-          'timeZone': 'America/Los_Angeles',
-        },
-        'attendees': [
-          {'email': 'binanhphuoc@gmail.com'}
-        ],
-        'reminders': {
-          'useDefault': true,
-        //   'overrides': [
-        //     {'method': 'email', 'minutes': 24 * 60},
-        //     {'method': 'popup', 'minutes': 10},
-        //   ],
-        },
-      };
+router.post('/sendinvitations', (req, res) => {
+    var { event_id, emails } = req.body;
+    Event.findOne({
+        _id: event_id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+
+        var event = {
+            'summary': event.title,
+            'location': event.location,
+            'description': event.description,
+            'start': {
+              'dateTime': event.start,
+              'timeZone': 'America/Los_Angeles',
+            },
+            'end': {
+              'dateTime': event.end,
+              'timeZone': 'America/Los_Angeles',
+            },
+            'attendees': emails.map(item => ({'email':item})),
+            'reminders': {
+              'useDefault': true,
+            //   'overrides': [
+            //     {'method': 'email', 'minutes': 24 * 60},
+            //     {'method': 'popup', 'minutes': 10},
+            //   ],
+            },
+          };
+        
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+    
     
     send_calendar(event);
 });
