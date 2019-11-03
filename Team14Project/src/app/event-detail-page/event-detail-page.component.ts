@@ -24,7 +24,8 @@ import Axios from 'axios';
     eventList: [Object]
     displayedColumns: string[] = ['round', 'interviewer'];
     currentUser : any
-    API = 'https://obscure-badlands-88487.herokuapp.com'
+    // API = 'https://obscure-badlands-88487.herokuapp.com'
+    API = 'http://localhost:8080'
     pairList = [{
         round: 1,
         interviewer: 'Peter'
@@ -46,7 +47,7 @@ import Axios from 'axios';
       this.userService.getCurrentUser().then((user) => {
           this.currentUser = user
           console.log(eventId)
-        this.getInterviewers(eventId)
+          this.getInterviewers(eventId)
       });
     }
 
@@ -57,6 +58,7 @@ import Axios from 'axios';
     getInterviewers(eventId) {
         Axios.get(this.API + `/event/pair?eventId=${eventId}`)
         .then((events) => {
+            console.log(events)
             for (let i = 0; i < events.data.length; i++){
                 console.log(events.data[i])
             }

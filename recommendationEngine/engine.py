@@ -28,7 +28,7 @@ class Engine:
             self.skills = v['skills']
 
         def getID(self):
-            return self.id
+            return self.id if not self.inEmptyRoom else 'Waiting Room'
 
         def getSkills(self):
             return self.skills
@@ -46,8 +46,10 @@ class Engine:
         def getID(self):
             return self.id
 
-        def getSkills(self):
-            return self.skills[0]
+        def getNextSkillID(self, index):
+            if(len(self.skills) > index):
+                return self.skills[index]['id']
+            return None
 
         def getInterviewsDone(self):
             return self.interviewsDone
@@ -79,6 +81,12 @@ class Engine:
             participants.append(self.Participant(p))
         return participants
 
+    def chooseVolunteer(self, pq, visited):
+        volunteer =  self.Volunteer(None) if pq.empty() else pq.pop()
+        while volunteer in visited:
+            volunteer = self.Volunteer(None) if pq.empty() else pq.pop()
+        return volunteer
+
     def getResult(self, volunteers_data, participants_data):
         buckets = dict()
         volunteers = self.getVolunteers(volunteers_data)
@@ -93,10 +101,18 @@ class Engine:
         pairing = []
         while not participantPQ.empty():
             participant = participantPQ.pop()
-            volunteerPQ = buckets[(participant.getSkills()['id'])]
-            volunteer = self.Volunteer(None) if volunteerPQ.empty() else volunteerPQ.pop()
-            while volunteer in visited:
-                volunteer = self.Volunteer(None) if volunteerPQ.empty() else volunteerPQ.pop()
+            participantSkillIndex = 0
+            skillID = participant.getNextSkillID(participantSkillIndex)
+            if skillID is not None:
+                volunteerPQ = buckets[skillID] if skillID in buckets else PriorityQueue()
+            volunteer = self.chooseVolunteer(volunteerPQ, visited)
+            while volunteer.emptyRoom():
+                participantSkillIndex += 1
+                skillID = participant.getNextSkillID(participantSkillIndex)
+                if skillID is None:
+                    break
+                volunteerPQ = buckets[skillID] if skillID in buckets else PriorityQueue()
+                volunteer = self.chooseVolunteer(volunteerPQ, visited)
             if not volunteer.emptyRoom():
                 visited.add(volunteer)
             pairing.append([participant.getID(), volunteer.getID()])
