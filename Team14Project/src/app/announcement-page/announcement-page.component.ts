@@ -33,23 +33,36 @@ import Axios from 'axios';
         time: 'time'
       }]
     }
-  
-    ngOnInit() {
-      this.userService.getCurrentUser().then((user) => {
-        this.currentUser = user
-      });
 
+    getEvents() {
       Axios.get('https://obscure-badlands-88487.herokuapp.com/event/upcoming')
       .then((events) => {
         this.eventList = events.data;
       }).catch((e) => {
         console.log(e)
       });
-
     }
   
-    logOut() {
-      this.router.navigateByUrl('/');
+    ngOnInit() {
+      this.userService.getCurrentUser().then((user) => {
+        this.currentUser = user
+      });
+
+      this.getEvents()
+    }
+  
+    joinEvent(event) {
+      console.log(this.currentUser)
+      Axios.post('https://obscure-badlands-88487.herokuapp.com/event/join', {
+        event_id: event._id, 
+        user_role: this.currentUser.vip ? 'volunteers' : 'students', 
+        user_email: this.currentUser.email
+      })
+      .then((events) => {
+        this.eventList = events.data;
+      }).catch((e) => {
+        console.log(e)
+      });
     }
   }
   

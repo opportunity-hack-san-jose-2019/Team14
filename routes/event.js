@@ -113,53 +113,56 @@ router.post('/join', (req, res) => {
             error: "Unable to join"
         });
     }
-
     var eventUpdatePromise = Event.findOne({
         _id: event_id,
     }).then((event) => {
         if (!event) {
-            return Promise.reject(new Error("Event not found"));
+            res.status(404).send({
+                error: "Unable to join"
+            });
         }
-        var user_list = user_role === "student" ? event.students : event.volunteers;
+        var user_list = user_role === "students" ? event.students : event.volunteers;
         if (_.find(user_list, {email: user_email})) {
-            return Promise.reject(new Error("User already joined"));
+            res.status(400).send({
+                error: "Unable to join"
+            });
+        } else {
+            user_list.push({
+                email: user_email
+            });
+    
+            if (user_role === "students") {
+                event = _.assign(event, {"students": user_list})
+            } else {
+                event = _.assign(event, {"volunteers": user_list})
+            }
+            
+            event.save().then(event => {
+                var userModel = user_role === "students" ? Student : Volunteer;
+                var userUpdatePromise = userModel.findOne({
+                    email: user_email,
+                }).then((user) => {
+                    if (!user) {
+                        res.status(404).send({
+                            error: "Unable to join"
+                        });
+                    }
+                    var { event_list } = user;
+                    if (event_list.includes(event_id)){
+                        res.status(404).send(e);
+                    }
+                    event_list.push(event_id);
+                    user = _.assign(user, {
+                        event_list
+                    });
+                    user.save().then(user => res.send({user}));
+                }).catch((e) => {
+                    return res.status(404).send(e)
+                })
+            });
         }
-        user_list.push({
-            email: user_email
-        });
-        event = _.assign(event, {
-            [user_role === "student"? "students" : "volunteers"]:user_list
-        });
-        return event.save();
     }).catch((e) => {
-        return Promise.reject(e);
-    })
-
-    var userModel = user_role === "student" ? Student : Volunteer;
-    var userUpdatePromise = userModel.findOne({
-        email: user_email,
-    }).then((user) => {
-        if (!user) {
-            return Promise.reject(new Error("User not found"));
-        }
-        var { event_list } = user;
-        if (event_list.includes(event_id)){
-            return Promise.reject(new Error("User already joined"));
-        }
-        event_list.push(event_id);
-        user = _.assign(user, {
-            event_list
-        });
-        return user.save();
-    }).catch((e) => {
-        return Promise.reject(e);
-    })
-
-    Promise.all([eventUpdatePromise, userUpdatePromise]).then(() => {
-        res.send({status:"Success"});
-    }).catch(e => {
-        res.status(404).send({status:"Failed", message:e.message});
-        console.log(e)
+        res.status(404).send(e);
     })
 });
 
