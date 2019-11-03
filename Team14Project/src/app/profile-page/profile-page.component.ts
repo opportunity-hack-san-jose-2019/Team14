@@ -29,8 +29,12 @@ import {
 export class ProfilePageComponent implements OnInit {
 
   // Data for displaying
-  @ViewChild('eventTable', {static: false}) eventTable: MatTable<any> ;
-  @ViewChild('interestTable', {static: false}) interestTable: MatTable<any> ;
+  @ViewChild('eventTable', {
+    static: false
+  }) eventTable: MatTable < any > ;
+  @ViewChild('interestTable', {
+    static: false
+  }) interestTable: MatTable < any > ;
 
   user: any;
   isVolunteer = false;
@@ -71,6 +75,7 @@ export class ProfilePageComponent implements OnInit {
           }).then(response => {
             this.events.push(response.data);
             this.eventTable.renderRows();
+            this.showSuccessSnackbar();
           });
         }
 
@@ -80,6 +85,7 @@ export class ProfilePageComponent implements OnInit {
     axios.get(this.API + '/skill/all')
       .then(response => {
         this.interestList = response.data.skill;
+        this.showSuccessSnackbar();
       });
 
   }
@@ -87,6 +93,7 @@ export class ProfilePageComponent implements OnInit {
   logOut() {
     localStorage.clear();
     this.router.navigateByUrl('/');
+    this.showSuccessSnackbar();
   }
 
   getAttendingEvents() {
@@ -122,15 +129,17 @@ export class ProfilePageComponent implements OnInit {
         duration: 2000
       });
     } else {
-      this.user.interests.unshift(interest);
-      this.interestTable.renderRows();
 
       axios.post(this.API + '/skill/update', interest)
         .then(response => {
-          this.userService.getCurrentUser().then(userObj => console.log(userObj))
-          .catch(err => this.router.navigateByUrl('/'));
+          this.userService.getCurrentUser().then(userObj => {
+            this.user = userObj;
+            this.showSuccessSnackbar();
+          })
+            .catch(err => this.router.navigateByUrl('/'));
         });
 
+      this.interestTable.renderRows();
       this.interestScale = 0;
       this.interestName = '';
 
@@ -155,7 +164,13 @@ export class ProfilePageComponent implements OnInit {
     }
 
     axios.post(this.API + '/event/remove', body)
-      .then(response => console.log(response))
+      .then(response => this.showSuccessSnackbar())
       .catch(err => console.warn(err));
+  }
+
+  showSuccessSnackbar() {
+    this.snackBar.open('Success!', 'OK', {
+      duration: 2000
+    })
   }
 }
