@@ -14,7 +14,10 @@ const EventSchema = {
     media: {
         type: [String]
     },
-    time: {
+    start: {
+        type: Date,
+    },
+    end: {
         type: Date,
     },
     location: {

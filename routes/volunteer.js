@@ -112,21 +112,15 @@ router.post('/update', (req, res) => {
 
 router.post('/addeditskill', (req, res) => {
     Volunteer.findOne({
-        email: req.query.email,
+        email: req.body.email,
     }).then((volunteer) => {
         if (!volunteer) {
             return res.status(404).send({
                 error: "User not found"
             });
         }
-        if (req.body.career_fields) {
-            career_list = []
-            for (let i = 0; i < req.body.career_fields.length; i++) {
-                obj = JSON.parse(req.body.career_fields[i])
-                career_list.push(obj)
-            }
-            req.body.career_fields = _.unionBy(volunteer.career_fields, career_list, "skill_name");
-        }
+        var { skill_name, skill_level } = req.body;
+        req.body.career_fields = _.unionBy(volunteer.career_fields, [{skill_name, skill_level}], "skill_name");
         volunteer = _.assign(volunteer, req.body);
         volunteer.save().then((volunteer) => {
             res.send({volunteer});
