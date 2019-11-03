@@ -71,7 +71,7 @@ with open('volunteers.csv') as csv_file:
             volunteer = Volunteer(full_name,email,phone,cancelled,notes,vip,station,day,event_location,employer,title_industry,city_state,career_fields)
             # print(json.dumps(volunteer.__dict__))
             answers = json.loads(json.dumps(volunteer.__dict__))
-            r = requests.post('http://localhost:8080/volunteer/register', json=answers)
+            r = requests.post('https://obscure-badlands-88487.herokuapp.com/volunteer/register', json=answers)
             print(r.status_code)
             line_count += 1
 
