@@ -198,12 +198,14 @@ router.post('/sendinvitations', (req, res) => {
               ],
             },
         };
-        send_calendar(event).then(event => {
-            console.log(event);
-            res.send({"status":"Success"});
-        }).catch(e => {
-            res.send({"status":"Fail", "message":e.message});
-            console.log(e);
+        send_calendar(event, (err, eventRes) => {
+            if (err){
+                res.send({"status":"Fail", "message":e.message});
+                console.log(e);
+            }
+            else{
+                res.send({"status":"Success", "event": eventRes});
+            }
         });
     }).catch((e) => {
         res.status(404).send(e);
