@@ -44,16 +44,10 @@ const VoluteerSchema = {
     employer: {
         type: String,
     },
-    title: {
+    title_industry: {
         type: String,
     },
-    industry: {
-        type: String,
-    },
-    city: {
-        type: String,
-    },
-    state: {
+    city_state: {
         type: String,
     },
     career_fields: {
