@@ -36,6 +36,24 @@ router.get('/upcoming', (req, res) => {
     });
 });
 
+router.get('/upcoming/:email', (req, res) => {
+    eventList = []
+    Event.find().then((events) => {
+        events.forEach((event) => {
+            if (_.find(event.student, {email: req.params.email}) || _.find(event.volunteer, {email: req.params.email}) || new Date(Date.now()) >= new Date(event.start)) {
+                return
+            }
+            eventList.push(event)
+        });
+        eventList.sort((a, b) => {
+            Date.parse(a.start) - Date.parse(b.start)
+        });
+        res.send(eventList);
+    }).catch((e) =>{
+        res.status(400).send();
+    });
+});
+
 router.get('/info', (req, res) => {
     Event.findOne({
         _id: req.query.id,
