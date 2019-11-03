@@ -8,13 +8,13 @@
 
 <div>
 
-  <h1 class="text-center">Your information</h1>
+  <!-- <h1 class="text-center">Your information</h1>
 
-  <ul>
-    <li *ngFor="let item of objectKeys(user)">
-        Your {{ item }} - {{ user[item]}}
+  <ul class="text-center">
+    <li *ngFor="let item of objectKeys(user)" style="list-style: none;">
+        Your {{ item }} - <b>{{ user[item].length == 0 || user[item] == null ? 'None' : user[item]}}</b>
     </li>
-  </ul>
+  </ul> -->
 
   <h1 class="text-center">Events you are participating in ({{ user.event_list.length }})</h1>
   <table #eventTable mat-table [dataSource]="user.event_list" style="margin: 0px auto;">
