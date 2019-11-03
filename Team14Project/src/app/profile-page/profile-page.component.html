@@ -3,6 +3,7 @@
 
   {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}
   <span class="spacer"></span>
+  <button mat-button (click)="logOut();">Log Out</button>
 </mat-toolbar>
 
 <div>
@@ -28,7 +29,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-stroked-button color="warn" (click)="unregister(element);">Unregister</button>
+        <button mat-raised-button color="warn" (click)="unregister(element);">Unregister</button>
       </td>
     </ng-container>
 

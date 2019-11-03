@@ -16,6 +16,9 @@ import { MatTableModule } from '@angular/material/table';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 @NgModule({
@@ -37,7 +40,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     MatTableModule,
     MatGridListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

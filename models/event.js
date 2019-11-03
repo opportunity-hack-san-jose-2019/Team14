@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const EventSchema = {
+    title: {
+        type: String,
+        require: true
+    },
     time: {
         type: Date,
         required: true
