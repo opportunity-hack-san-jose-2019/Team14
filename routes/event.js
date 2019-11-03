@@ -204,6 +204,7 @@ router.post('/sendinvitations', (req, res) => {
             let notification = new Notification({
                 title: "You have been invited to participate in "+title,
                 description,
+                time: Date.now(),
                 type: "Event Invitation",
                 event_id,
                 user_email: email,
