@@ -132,7 +132,6 @@ router.post('/update', (req, res) => {
 
 router.get('/pair', (req, res) => {
     var { event_id } = req.body;
-    var students
     Event.findOne({
         _id: event_id,
     }).then((event) => {
@@ -141,7 +140,13 @@ router.get('/pair', (req, res) => {
                 error: "Event not found"
             });
         }
-        res.send(event);
+        students = event.students.map(item => {
+            Student.findOne({email:item.email}).then(student => {
+                return Promise.resolve({name: item.email})
+            })
+        });
+        volunteers = event.volunteers;
+        
     }).catch((e) => {
         res.status(404).send(e);
     })
