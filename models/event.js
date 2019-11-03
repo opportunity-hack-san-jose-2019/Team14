@@ -29,6 +29,9 @@ const EventSchema = {
     volunteers: {
         type: [Object], // email, status
     },
+    pairing: {
+        type:[Object]
+    }
 };
 
 var Event = mongoose.model('Event', EventSchema);
