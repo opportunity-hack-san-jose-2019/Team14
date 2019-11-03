@@ -24,6 +24,8 @@ import Axios from 'axios';
     currentUser : Object;
     eventList: [Object]
     displayedColumns: string[] = ['round', 'interviewer'];
+    currentUser : any
+    API = 'https://obscure-badlands-88487.herokuapp.com'
     pairList = [{
         round: 1,
         interviewer: 'Peter'
@@ -40,10 +42,29 @@ import Axios from 'axios';
         location: 'cali',
         time: 'time'
       }]
+      console.log('hello')
+      let eventId = this.router.getCurrentNavigation().extras.state.eventId;
+      this.userService.getCurrentUser().then((user) => {
+          this.currentUser = user
+          console.log(eventId)
+        this.getInterviewers(eventId)
+      });
     }
 
     ngOnInit() {
 
+    }Í
+
+    getInterviewers(eventId) {
+        Axios.get(this.API + `/event/pair?eventId=${eventId}`)
+        .then((events) => {
+            for (let i = 0; i < events.data.length; i++){
+                console.log(events.data[i])
+            }
+        }).catch((e) => {
+            console.log(e)
+        });
     }
+
   }
   
