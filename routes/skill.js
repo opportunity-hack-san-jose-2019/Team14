@@ -3,6 +3,7 @@ const _ = require('lodash');
 const router = express.Router();
 const { Skill } = require('../models/skill');
 const { Student } = require('../models/student')
+const { Volunteer } = require('../models/volunteer');
 
 router.get('/', (req, res) => {
     console.log('skills');
@@ -47,6 +48,42 @@ router.post('/skill', (req, res) => {
     }).catch((e) => {
         res.status(400).send();
     });
+});
+
+router.post('/skill', (req, res) => {
+    Volunteer.findOne({
+        email: req.body.email,
+    }).then((volunteer) => {
+        if (!volunteer) {
+            Student.findOne({
+                email: req.body.email
+            }).then(student => {
+                var { skill_name, skill_level } = req.body;
+                req.body.interests = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],student.interests, "skill_name");
+                student = _.assign(student, req.body);
+                student.save().then((student) => {
+                    res.send({student});
+                }).catch((e) => {
+                    res.status(404).send();
+                    console.log(e)
+                });
+            }).catch(e => {
+                res.status(404).send();
+                console.log(e)
+            })
+        }
+        var { skill_name, skill_level } = req.body;
+        req.body.career_fields = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],volunteer.career_fields, "skill_name");
+        volunteer = _.assign(volunteer, req.body);
+        volunteer.save().then((volunteer) => {
+            res.send({volunteer});
+        }).catch((e) => {
+            res.status(404).send();
+            console.log(e)
+        });
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
 });
 
 router.get('/all', (req, res) => {

@@ -80,7 +80,7 @@ export class ProfilePageComponent implements OnInit {
 
     console.log(interest);
 
-    axios.post('https://obscure-badlands-88487.herokuapp.com/volunteer/addeditskill', interest)
+    axios.post('https://obscure-badlands-88487.herokuapp.com/skill/skill', interest)
       .then(response => console.log(response));
     
     this.interestScale = 0;
