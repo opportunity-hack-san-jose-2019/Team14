@@ -67,40 +67,26 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
-    var checkIfStudent = Student.findOne({
+    Student.findOne({
         email: req.body.email,
         password: req.body.password
     }).then((student) => {
         if (!student) {
-            return Promise.reject(new Error("User not found"));
+            Volunteer.findOne({
+                email: req.body.email,
+                password: req.body.password
+            }).then((volunteer) => {
+                if (!volunteer) {
+                    res.status(404).send({"status":"Fail", "message":"User not found"});
+                }
+                else { res.send(volunteer); }
+            }).catch((e) => {
+                res.status(404).send({"status":"Fail", "message":e.message});
+            })
         }
-        student.role = "student";
-        return Promise.resolve(student);
+        else { res.send(student); }
     }).catch((e) => {
-        return Promise.reject(e);
-    })
-
-    var checkIfVolunteer = Volunteer.findOne({
-        email: req.body.email,
-        password: req.body.password
-    }).then((volunteer) => {
-        if (!volunteer) {
-            return Promise.reject(new Error("User not found"));
-        }
-        volunteer.role = "volunteer";
-        return Promise.resolve(volunteer);
-    }).catch((e) => {
-        return Promise.reject(e);
-    })
-
-    checkIfStudent.then(student => {
-        res.send(student);
-    }).catch(e => {
-        checkIfVolunteer.then(voluteer => {
-            res.send(voluteer);
-        }).catch(e => {
-            res.status(404).send({"status": "Fail", "message":"User not found"})
-        })
+        res.status(404).send({"status":"Fail", "message":e.message});
     })
 });
 
