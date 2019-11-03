@@ -67,4 +67,16 @@ export class ProfilePageComponent implements OnInit {
 
     return user;
   }
+
+  addInterest() {
+    var interest = {
+        skill_name: this.interestName,
+        skill_level: this.interestScale
+    }
+
+    this.interestScale = 0;
+    this.interestName = '';
+
+    this.isAddingInterest = !this.isAddingInterest;
+  }
 }

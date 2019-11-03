@@ -27,9 +27,9 @@
         <input [(ngModel)]="interestName" matInput placeholder="Interest">
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input [(ngModel)]="interestScale" matInput type="number" placeholder="Skill scale">
+        <input [(ngModel)]="interestScale" matInput type="number" min="0" max="10" placeholder="Skill scale">
       </mat-form-field>
-      <button mat-raised-button color="danger" (click)="isAddingInterest = !isAddingInterest">Add</button>
+      <button mat-raised-button color="danger" (click)="addInterest();">Add</button>
     </div>
   </div>
 
