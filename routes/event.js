@@ -170,8 +170,8 @@ router.get('/pair', (req, res) => {
                 for (var key in obj) {
                     if (obj.hasOwnProperty(key)) {
                         pairList.push({
-                            interviewer: key,
-                            intervieweee: obj[key]
+                            interviewee: key,
+                            interviewer: obj[key]
                         })
                     }
                 }
