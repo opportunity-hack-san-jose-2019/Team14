@@ -27,6 +27,11 @@ export class ProfilePageComponent implements OnInit {
 
   @ViewChild('eventTable', { static: false }) eventTable: MatTable < any > ;
   user: Object;
+  isVolunteer = false;
+  appName = 'Braven';
+  objectKeys = Object.keys;
+
+  displayedColumns: string[] = ['title', 'location', 'time', 'action'];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
@@ -37,12 +42,6 @@ export class ProfilePageComponent implements OnInit {
     }); 
 
   }
-
-  isVolunteer = false;
-
-  appName = 'Braven';
-
-  displayedColumns: string[] = ['title', 'location', 'time', 'action'];
 
   logOut() {
     localStorage.clear();
