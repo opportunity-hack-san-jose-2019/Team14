@@ -21,7 +21,7 @@ import Axios from 'axios';
   export class AnnouncementPageComponent implements OnInit {
   
     @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
-    currentUser : Object;
+    currentUser : any;
     eventList: [Object]
     displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
