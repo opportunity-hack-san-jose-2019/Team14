@@ -214,7 +214,7 @@ router.post('/sendinvitations', (req, res) => {
                 }
                 g_calendar("watch_event", event_metadata, (err, watchRes) => {
                     if (err){
-                        res.send({"status":"Fail", "message":e.message});
+                        res.send({"status":"Fail", "message":err.message});
                         console.log(e);
                     }
                     else {
