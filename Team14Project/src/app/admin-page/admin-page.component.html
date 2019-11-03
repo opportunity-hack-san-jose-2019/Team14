@@ -12,6 +12,11 @@
     <input [(ngModel)]="eventLocation" required class="inputField" matInput placeholder="Event location">
   </mat-form-field>
 
+  
+  <mat-form-field class="example-full-width">
+      <input [(ngModel)]="eventDescription" required class="inputField" matInput placeholder="Event description">
+    </mat-form-field>
+
   <mat-form-field class="example-full-width">
     <input [(ngModel)]="eventTime" class="inputField" matInput [matDatepicker]="picker" placeholder="Choose a date">
     <mat-datepicker-toggle matSuffix [for]="picker" style="color: #333;"></mat-datepicker-toggle>
