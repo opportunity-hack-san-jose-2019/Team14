@@ -38,8 +38,8 @@ router.post('/create', (req, res) => {
     let event = new Event({
         title: req.body.title,
         description: req.body.description,
-        start_time: req.body.start_time,
-        end_time: req.body.end_time,
+        start: req.body.start,
+        end: req.body.end,
         location: req.body.location,
     });
     event.save().then((event) => {
@@ -132,23 +132,23 @@ router.post('/sendinvitations', (req, res) => {
     var { event_id, emails } = req.body;
     Event.findOne({
         _id: event_id,
-    }).then((event) => {
-        if (!event) {
+    }).then((eventFromDB) => {
+        if (!eventFromDB) {
             return res.status(404).send({
                 error: "Event not found"
             });
         }
 
         var event = {
-            'summary': event.title,
-            'location': event.location,
-            'description': event.description,
+            'summary': eventFromDB.title,
+            'location': eventFromDB.location,
+            'description': eventFromDB.description,
             'start': {
-              'dateTime': event.start,
+              'dateTime': eventFromDB.start,
               'timeZone': 'America/Los_Angeles',
             },
             'end': {
-              'dateTime': event.end,
+              'dateTime': eventFromDB.end,
               'timeZone': 'America/Los_Angeles',
             },
             'attendees': emails.map(item => ({'email':item})),
@@ -159,13 +159,17 @@ router.post('/sendinvitations', (req, res) => {
             //     {'method': 'popup', 'minutes': 10},
             //   ],
             },
-          };
-        
+        };
+        send_calendar(event).then(event => {
+            console.log(event);
+            res.send({"status":"Success"});
+        }).catch(e => {
+            res.send({"status":"Fail", "message":e.message});
+            console.log(e);
+        });
     }).catch((e) => {
         res.status(404).send(e);
     })
-    
-    send_calendar(event);
 });
 
 module.exports = router;

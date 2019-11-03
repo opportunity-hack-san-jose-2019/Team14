@@ -10,11 +10,16 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 const TOKEN_PATH = './token.json';
 
 // Load client secrets from a local file.
-const send_calendar = (event) => fs.readFile('./google/credentials.json', (err, content) => {
+const send_calendar = async (event) => fs.readFile('./google/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Calendar API.
-  console.log(JSON.parse(content));
-  authorize(JSON.parse(content), (auth) => {send_event(auth, event)});
+  authorize(JSON.parse(content), (auth) => {send_event(auth, event, (err, event) => {
+    return new Promise((resolve, reject) => {
+        if (err)
+            reject(err);
+        resolve(event);
+    })
+  })});
 });
 
 /**
@@ -71,19 +76,13 @@ function getAccessToken(oAuth2Client, callback) {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function send_event(auth, event) {
+function send_event(auth, event, callback) {
   const calendar = google.calendar({version: 'v3', auth});
   calendar.events.insert({
     auth: auth,
     calendarId: 'primary',
     resource: event,
-  }, function(err, event) {
-    if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
-    }
-    console.log('Event created: %s', event);
-  });
+  }, callback);
 }
 
 module.exports = { send_calendar };
