@@ -19,6 +19,23 @@ router.get('/all', (req, res) => {
     });
 });
 
+router.get('/upcoming', (req, res) => {
+    eventList = []
+    Event.find().then((events) => {
+        events.forEach((event) => {
+            if (new Date(Date.now()) < new Date(event.start)) {
+                eventList.push(event)
+            }  
+        });
+        eventList.sort((a, b) => {
+            Date.parse(a.start) - Date.parse(b.start)
+        });
+        res.send(eventList);
+    }).catch((e) =>{
+        res.status(400).send();
+    });
+});
+
 router.get('/info', (req, res) => {
     Event.findOne({
         _id: req.query.id,
