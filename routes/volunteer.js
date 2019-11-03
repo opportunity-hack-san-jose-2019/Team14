@@ -33,9 +33,11 @@ router.get('/profile', (req, res) => {
 
 router.post('/register', (req, res) => {
     career_list = []
-    for (let i = 0; i < req.body.career_fields.length; i++) {
-        obj = JSON.parse(req.body.career_fields[i])
-        career_list.push(obj)
+    if (req.body.career_fields !== undefined ) {
+        for (let i = 0; i < req.body.career_fields.length; i++) {
+            obj = JSON.parse(req.body.career_fields[i])
+            career_list.push(obj)
+        }
     }
     let volunteer = new Volunteer({
         first: req.body.first,
