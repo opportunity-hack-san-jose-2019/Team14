@@ -59,8 +59,19 @@ import Axios from 'axios';
         Axios.get(this.API + `/event/pair?eventId=${eventId}`)
         .then((events) => {
             console.log(events)
-            for (let i = 0; i < events.data.length; i++){
-                console.log(events.data[i])
+            this.pairList = []
+            let index = 0
+            if (events.data.pairing === undefined) {
+                return
+            }
+            for (let j = 0; j < events.data.pairing.length; j++) {
+                if (events.data.pairing[j][0] == this.currentUser.email) {
+                    this.pairList.push({
+                        round: index,
+                        interviewer: events.data.pairing[j][1]
+                    });
+                    index++
+                }
             }
         }).catch((e) => {
             console.log('here')
