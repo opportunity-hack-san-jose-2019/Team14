@@ -129,12 +129,12 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/addpair', (req, res) => {
-    const { id, round, volunteer_email, student_email } = req.body;
+    const { event_id, round, volunteer_email, student_email } = req.body;
     Event.findOne({
-        _id: id,
+        _id: event_id,
     }).then((event) => {
         if (!event) {
-            return res.status(404).send({
+            res.status(404).send({
                 error: "Event not found"
             });
         }
