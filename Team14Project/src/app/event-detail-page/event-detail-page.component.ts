@@ -79,11 +79,7 @@ import Axios from 'axios';
             if (index == 0) {
                 this.pairList = [{
                     round: 1,
-                    interviewer: 'Peter'
-                },
-                {
-                    round: 2,
-                    interviewer: 'William'
+                    interviewer: 'Waiting Room'
                 }]
             }
         }).catch((e) => {
