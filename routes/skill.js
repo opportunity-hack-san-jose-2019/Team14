@@ -58,8 +58,9 @@ router.post('/skill', (req, res) => {
             Student.findOne({
                 email: req.body.email
             }).then(student => {
+                console.log(student)
                 var { skill_name, skill_level } = req.body;
-                req.body.interests = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],student.interests, "skill_name");
+                req.body.interests = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}], student.interests, "skill_name");
                 student = _.assign(student, req.body);
                 student.save().then((student) => {
                     res.send({student});
@@ -70,7 +71,7 @@ router.post('/skill', (req, res) => {
             }).catch(e => {
                 res.status(404).send();
                 console.log(e)
-            })
+            });
         }
         var { skill_name, skill_level } = req.body;
         req.body.career_fields = _.unionBy([{skill_name, skill_level: parseInt(skill_level)}],volunteer.career_fields, "skill_name");
