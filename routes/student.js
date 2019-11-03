@@ -16,6 +16,21 @@ router.get('/all', (req, res) => {
     });
   });
 
+router.get('/profile', (req, res) => {
+    Student.findOne({
+        email: req.query.email,
+    }).then((student) => {
+        if (!student) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+        res.send(student);
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 router.post('/register', (req, res) => {
     let student = new Student({
         full_name: req.body.full_name,
