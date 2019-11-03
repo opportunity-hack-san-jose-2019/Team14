@@ -139,12 +139,35 @@ router.get('/pair', (req, res) => {
                 error: "Event not found"
             });
         }
-        students = event.students.map(item => {
-            Student.findOne({email:item.email}).then(student => {
-                return Promise.resolve({name: item.email})
+        students = Promise.all(event.students.map(item => {
+            return Student.findOne({email:item.email}).then(student => {
+                return Promise.resolve({
+                    name: item.email, 
+                    interests: student.interests.map(interest => interest.skill_name)
+                });
             })
-        });
-        volunteers = event.volunteers;
+        }));
+        volunteers = Promise.all(event.volunteers.map(item => {
+            return Volunteer.findOne({email:item.email}).then(volunteer => {
+                return Promise.resolve({
+                    name: item.email, 
+                    interests: volunteer.career_fields.map(interest => interest.skill_name)
+                });
+            });
+        }));
+        Promise.all([students, volunteers]).then(values => {
+            var input = {
+                group1: values[0],
+                group2: values[1]
+            }
+            Algorithmia.client("simZ80aiR3ONCezNfyywCkml54i1")
+            .algo("matching/DatingAlgorithm/0.1.3?timeout=300") // timeout is optional
+            .pipe(input)
+            .then(function(response) {
+                console.log(response.get());
+                res.send(response.get());
+            });
+        })
         
     }).catch((e) => {
         res.status(404).send(e);
