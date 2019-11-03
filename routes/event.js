@@ -38,6 +38,44 @@ router.get('/upcoming', (req, res) => {
     });
 });
 
+router.get('/attending', (req, res) => {
+    let userRole = req.query.role
+    
+    if (userRole === 'students') {
+        Student.findOne({
+            email: req.query.email,
+        }).then((student) => {
+            eventIds = []
+            for (let i = 0; i < student.event_list.length; i++) {
+                eventIds.push(student.event_list[i]);
+            }
+            Event.find({
+                '_id': { $in: eventIds}
+            }).then(events => {
+                res.send(events);
+            });
+        }).catch((e) => {
+            res.status(404).send(e);
+        })
+    } else {
+        Volunteer.findOne({
+            email: req.query.email,
+        }).then((volunteer) => {
+            eventIds = []
+            for (let i = 0; i < volunteer.event_list.length; i++) {
+                eventIds.push(volunteer.event_list[i]);
+            }
+            Event.find({
+                '_id': { $in: eventIds}
+            }).then(events => {
+                res.send(events);
+            });
+        }).catch((e) => {
+            res.status(404).send(e);
+        })
+    }
+});
+
 router.get('/info', (req, res) => {
     Event.findOne({
         _id: req.query.id,
