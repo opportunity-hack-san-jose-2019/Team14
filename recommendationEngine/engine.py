@@ -87,6 +87,19 @@ class Engine:
             volunteer = self.Volunteer(None) if pq.empty() else pq.pop()
         return volunteer
 
+    def addWaiting(self, waiting, pairing, buckets, visited, volunteers):
+        i = 0
+        if len(visited) != len(volunteers):
+            for v in volunteers:
+                if v not in visited:
+                    if i > len(waiting):
+                        return pairing
+                    pairing.append([waiting[i].getID(), v.getID()])
+                    visited.add(v)
+                    i += 1
+        return pairing
+
+
     def getResult(self, volunteers_data, participants_data):
         buckets = dict()
         volunteers = self.getVolunteers(volunteers_data)
@@ -99,24 +112,36 @@ class Engine:
         participantPQ = self.getSortedByInterviewsDone(participants)
         visited = set()
         pairing = []
+        waiting = []
         while not participantPQ.empty():
             participant = participantPQ.pop()
             participantSkillIndex = 0
             skillID = participant.getNextSkillID(participantSkillIndex)
             if skillID is not None:
-                volunteerPQ = buckets[skillID] if skillID in buckets else PriorityQueue()
+                if skillID in buckets:
+                    volunteerPQ = buckets[skillID]
+                else:
+                    waiting.append(participant)
+                    volunteerPQ = PriorityQueue()
+            else:
+                waiting.append(participant)
+                volunteerPQ = PriorityQueue()
             volunteer = self.chooseVolunteer(volunteerPQ, visited)
             while volunteer.emptyRoom():
                 participantSkillIndex += 1
                 skillID = participant.getNextSkillID(participantSkillIndex)
                 if skillID is None:
                     break
-                volunteerPQ = buckets[skillID] if skillID in buckets else PriorityQueue()
+                if skillID in buckets:
+                    volunteerPQ = buckets[skillID]
+                else:
+                    waiting.append(participant)
+                    volunteerPQ = PriorityQueue()
                 volunteer = self.chooseVolunteer(volunteerPQ, visited)
             if not volunteer.emptyRoom():
                 visited.add(volunteer)
             pairing.append([participant.getID(), volunteer.getID()])
-        return pairing
+        return self.addWaiting(waiting, pairing, buckets, visited, volunteers)
 
     def getSkillConfidence(self, v):
         skillswithconfidence = []
