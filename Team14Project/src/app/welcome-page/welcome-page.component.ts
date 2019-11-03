@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-welcome-page',
@@ -8,7 +10,7 @@ import axios from 'axios';
 })
 export class WelcomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -38,10 +40,15 @@ export class WelcomePageComponent implements OnInit {
       email: this.email
     }
 
-    axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
+    if(!this.firstName || !this.lastName || !this.password || !this.email) {
+      this.snackBar.open('All fields are required!', 'OK', {
+        duration: 2000
+      });
+    } else {
+      axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
       .then(response => console.log(response.data));
+    }
 
     console.log(student);
   }
-
 }

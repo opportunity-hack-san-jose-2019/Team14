@@ -13,13 +13,17 @@ import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MatTableModule } from '@angular/material/table';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfilePageComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import { MatTableModule } from '@angular/material/table';
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatGridListModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+
+import {
+  MatTable
+} from '@angular/material/table';
 
 @Component({
   selector: 'app-profile-page',
@@ -7,17 +15,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
 
-  ngOnInit() {
-  }
 
-  data = [
+  constructor() {}
+
+  ngOnInit() {}
+
+  isVolunteer = false;
+  data = [{
+      title: 'Mentor event',
+      location: 'San Jose',
+      time: '6.00pm November 10'
+    },
+    {
+      title: 'School event',
+      location: 'San Francisco',
+      time: '2.30pm November 17'
+    },
     {
       title: 'Mentor event',
       location: 'San Jose',
       time: '6.00pm November 10'
-    }, 
+    },
+    {
+      title: 'School event',
+      location: 'San Francisco',
+      time: '2.30pm November 17'
+    },
+    {
+      title: 'Mentor event',
+      location: 'San Jose',
+      time: '6.00pm November 10'
+    },
     {
       title: 'School event',
       location: 'San Francisco',
@@ -27,5 +57,11 @@ export class ProfilePageComponent implements OnInit {
 
   appName = 'Braven';
 
-  displayedColumns: string[] = ['title', 'location', 'time'];
+  displayedColumns: string[] = ['title', 'location', 'time', 'action'];
+
+  unregister(event) {
+    this.data.splice(this.data.indexOf(event), 1);
+
+    this.eventTable.renderRows();
+  }
 }

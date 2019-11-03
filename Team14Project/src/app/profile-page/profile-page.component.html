@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
-  Name Lastname
+  Name Lastname -
+
+  {{ isVolunteer? 'Volunteer profile' : 'Member profile' }}
   <span class="spacer"></span>
 </mat-toolbar>
 
 <div>
-  <h1 class="text-center">Events you are participating in (2)</h1>
-  <table mat-table [dataSource]="data" style="margin: 0px auto;">
+  <h1 class="text-center">Events you are participating in ({{ data.length }})</h1>
+  <table #eventTable mat-table [dataSource]="data" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Event title </th>
@@ -20,6 +22,14 @@
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef>Event time</th>
       <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button color="warn" (click)="unregister(element);">Unregister</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

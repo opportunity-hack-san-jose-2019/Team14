@@ -1,0 +1,43 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.example-container {
+  width: 60%;
+  margin: 0px auto;
+  margin-top: 5rem;
+}
+
+.example-container>* {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.wh {
+  color: white;
+}
+
+.inputField {
+  border-bottom: 2px solid #7b1fa2;
+}
+
+table {
+  width: 90%;
+}
+
+.inputField {
+  border-bottom: 2px solid #7b1fa2;
+}
