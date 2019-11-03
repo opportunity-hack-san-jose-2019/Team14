@@ -1,4 +1,5 @@
-<app-toolbar pageName="{{user.full_name}} - {{ user.interests === undefined ? 'Volunteer profile' : 'Member profile' }}" color="primary">
+<app-toolbar pageName="{{user.full_name}} - {{ user.interests === undefined ? 'Volunteer profile' : 'Member profile' }}"
+  color="primary">
 </app-toolbar>
 
 <div>
@@ -33,7 +34,8 @@
 
   <br>
 
-  <table *ngIf="user.interests !== undefined && user.interests.length != 0" #interestTable mat-table [dataSource]="user.interests" style="margin: 0px auto;">
+  <table *ngIf="user.interests !== undefined && user.interests.length != 0" #interestTable mat-table
+    [dataSource]="user.interests" style="margin: 0px auto;">
 
     <ng-container matColumnDef="skill_name">
       <th mat-header-cell *matHeaderCellDef>Skill name</th>
@@ -53,7 +55,10 @@
   <hr>
 
   <h1 class="text-center">Events you are participating in ({{ events.length }})</h1>
-  <h2 class="text-center" *ngIf="events.length == 0">There are no any events yet</h2>
+  <h2 class="text-center" *ngIf="events.length == 0">
+    There are no any events yet
+    <button mat-raised-button color="primary" (click)="router.navigateByUrl('/announcement');">View events</button>
+  </h2>
 
   <table *ngIf="events.length != 0" #eventTable mat-table [dataSource]="events" style="margin: 0px auto;">
 
