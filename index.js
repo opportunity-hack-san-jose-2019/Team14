@@ -34,6 +34,7 @@ app.use('/student', require('./routes/student'));
 app.use('/volunteer', require('./routes/volunteer'));
 app.use('/event', require('./routes/event'));
 app.use('/skill', require('./routes/skill'));
+app.use('/google43499dd9d8321fe4.html', require('./google/verify'));
 
 app.listen(port, () => {
     console.log(`app is listening on port ${port}`);
