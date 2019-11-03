@@ -25,7 +25,7 @@ import Axios from 'axios';
     eventList: [Object]
     displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
-    API = "https://obscure-badlands-88487.herokuapp.com";
+    API = "http://localhost:8080";
 
     constructor(private router: Router, private userService: UserService) {
       this.eventList = [{
@@ -58,7 +58,7 @@ import Axios from 'axios';
       this.eventTable.renderRows();
       Axios.post(this.API + '/event/join', {
         event_id: event._id, 
-        user_role: this.currentUser.vip ? 'volunteers' : 'students', 
+        user_role: this.currentUser.vip !== undefined ? 'volunteers' : 'students', 
         user_email: this.currentUser.email
       })
       .then((events) => {
