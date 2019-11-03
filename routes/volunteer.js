@@ -31,7 +31,12 @@ router.get('/profile', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    let volunteer = new Volunteer({
+    career_list = []
+    for (let i = 0; i < req.body.career_fields.length; i++) {
+        obj = JSON.parse(req.body.career_fields[i])
+        career_list.push(obj)
+    }
+    let voluteer = new Voluteer({
         first: req.body.first,
         last: req.body.last,
         password: req.body.password,
@@ -47,7 +52,7 @@ router.post('/register', (req, res) => {
         employer: req.body.employer,
         title_industry: req.body.title_industry,
         city_state: req.body.city_state,
-        career_fields: req.body.career_fields
+        career_fields: career_list
     });
     volunteer.save().then((volunteer) => {
         res.send({volunteer});
