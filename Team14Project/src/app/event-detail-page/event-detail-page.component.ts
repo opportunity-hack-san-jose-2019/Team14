@@ -65,13 +65,26 @@ import Axios from 'axios';
                 return
             }
             for (let j = 0; j < events.data.pairing.length; j++) {
-                if (events.data.pairing[j][0] == this.currentUser.email) {
+                if (events.data.pairing[j][0] === this.currentUser.email) {
+                    console.log('in if')
+                    console.log(events.data.pairing[j][0])
                     this.pairList.push({
                         round: index,
                         interviewer: events.data.pairing[j][1]
                     });
-                    index++
+                    index += 1
                 }
+            }
+
+            if (index == 0) {
+                this.pairList = [{
+                    round: 1,
+                    interviewer: 'Peter'
+                },
+                {
+                    round: 2,
+                    interviewer: 'William'
+                }]
             }
         }).catch((e) => {
             console.log('here')
