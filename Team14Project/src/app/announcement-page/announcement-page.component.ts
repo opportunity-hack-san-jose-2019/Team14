@@ -35,7 +35,7 @@ import Axios from 'axios';
     }
 
     getEvents() {
-      Axios.get(`http://localhost:8080/event/upcoming?email=${this.currentUser.email}`)
+      Axios.get(`https://obscure-badlands-88487.herokuapp.com/event/upcoming?email=${this.currentUser.email}`)
       .then((events) => {
         this.eventList = events.data;
       }).catch((e) => {
