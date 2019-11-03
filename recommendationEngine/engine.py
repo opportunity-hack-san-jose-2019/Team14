@@ -1,22 +1,43 @@
-from queue import PriorityQueue
-import set
+import heapq
+ 
+class PriorityQueue:
+    def __init__(self):
+        self._queue = []
+        self._index = 0
+ 
+    def push(self, item, priority):
+        heapq.heappush(self._queue, (-1 * priority, self._index, item))
+        self._index += 1
+ 
+    def pop(self):
+        return heapq.heappop(self._queue)[-1]
+
+    def empty(self):
+        return len(self._queue) == 0
 
 class Engine:
 
     class Volunteer:
 
         def __init__(self, v):
+            if v is None:
+                self.inEmptyRoom = True
+                return
+            self.inEmptyRoom = False
             self.id = v['id']
             self.skills = v['skills']
 
-        def getID():
+        def getID(self):
             return self.id
 
-        def getSkills():
+        def getSkills(self):
             return self.skills
 
+        def emptyRoom(self):
+            return self.inEmptyRoom
 
-    class participant:
+
+    class Participant:
         def __init__(self, p):
             self.id = p['id']
             self.skills = p['interests']
@@ -26,7 +47,7 @@ class Engine:
             return self.id
 
         def getSkills(self):
-            return self.skills
+            return self.skills[0]
 
         def getInterviewsDone(self):
             return self.interviewsDone
@@ -43,57 +64,58 @@ class Engine:
             return self.confidence
 
         def getSkill(self):
-            return self.skill
+            return self.skill['id']
 
 
-    def getVolunteers(volunteers_data):
+    def getVolunteers(self, volunteers_data):
         volunteers = []
         for v in volunteers_data:
-            volunteer.append(Volunteer(v))
+            volunteers.append(self.Volunteer(v))
         return volunteers
 
-    def getParticipants(participants_data):
+    def getParticipants(self, participants_data):
         participants = []
         for p in participants_data:
-            participants.append(Participants(p))
+            participants.append(self.Participant(p))
         return participants
 
-    def getresult(self, volunteers_data, participants_data):
-        volunteers = getVolunteers(volunteers_data)
-        participants = getParticipants(participants_data)
+    def getResult(self, volunteers_data, participants_data):
+        buckets = dict()
+        volunteers = self.getVolunteers(volunteers_data)
+        participants = self.getParticipants(participants_data)
         for v in volunteers:
-            for sc in getSkillConfidence(v):
+            for sc in self.getSkillConfidence(v):
                 if sc.getSkill() not in buckets:
                     buckets[sc.getSkill()] = PriorityQueue()
-                buckets[sc.getSkill()].put((sc.getConfidence(), v))
-        participantPQ = getSortedByInterviewsDone(participants)
+                buckets[sc.getSkill()].push(v, (sc.getConfidence()))
+        participantPQ = self.getSortedByInterviewsDone(participants)
         visited = set()
         pairing = []
         while not participantPQ.empty():
-            participant = participantPQ.get()
-            volunteerPQ = buckets[participant.getSkill()]
-            volunteer = Volunteer(None) if len(volunteerPQ) == 0 else volunteerPQ.get()
+            participant = participantPQ.pop()
+            volunteerPQ = buckets[(participant.getSkills()['id'])]
+            volunteer = self.Volunteer(None) if volunteerPQ.empty() else volunteerPQ.pop()
             while volunteer in visited:
-                volunteer = Volunteer(None) if len(volunteerPQ) == 0 else volunteerPQ.get()
+                volunteer = self.Volunteer(None) if volunteerPQ.empty() else volunteerPQ.pop()
             if not volunteer.emptyRoom():
                 visited.add(volunteer)
             pairing.append([participant.getID(), volunteer.getID()])
         return pairing
 
-    def getSkillConfidence(v):
+    def getSkillConfidence(self, v):
         skillswithconfidence = []
         for s in v.getSkills():
-            skillswithconfidence.append(SkillConfidence(s, getConfidence(s, v.getSkills())))
+            skillswithconfidence.append(self.SkillConfidence(s, self.getConfidence(s, v.getSkills())))
         return skillswithconfidence
 
-    def getConfidence(skill, skills):
+    def getConfidence(self, skill, skills):
         score = 0
         for s in skills:
             score += s['val']
-        return skill.['val']/score
+        return skill['val']/score
 
-    def getSortedByInterviewsDone(participants):
+    def getSortedByInterviewsDone(self, participants):
         pq = PriorityQueue()
         for p in participants:
-            pq.add(p.getIntervewsDone(), p)
+            pq.push(p, p.getInterviewsDone())
         return pq

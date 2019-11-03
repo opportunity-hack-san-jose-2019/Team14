@@ -5,6 +5,7 @@ const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
 const { Notification } = require('../models/notification');
 const { send_calendar } = require('../google/send_calendar');
+const axios = require('axios');
 var Algorithmia = require("algorithmia");
 const _ = require('lodash');
 
@@ -169,30 +170,31 @@ router.get('/pair', (req, res) => {
                 volunteers: values[1]
             }
             console.log(studentsandvolunteers);
-
+            axios.post('http://localhost:5000/getResult', studentsandvolunteers)
+            .then(result => {console.log(result)});
             var input = {
                 group1: values[0],
                 group2: values[1]
             }
-            Algorithmia.client("simZ80aiR3ONCezNfyywCkml54i1")
-            .algo("matching/DatingAlgorithm/0.1.3?timeout=300") // timeout is optional
-            .pipe(input)
-            .then(function(response) {
-                pairList = [];
-                obj = response.get();
-                for (var key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        pairList.push({
-                            interviewee: key,
-                            interviewer: obj[key]
-                        })
-                    }
-                }
-                event = _.assign(event, {"pairing": pairList})
-                event.save().then(event => {
-                    res.send(event);
-                }).catch(err => res.status(404).send(err));
-            });
+            // Algorithmia.client("simZ80aiR3ONCezNfyywCkml54i1")
+            // .algo("matching/DatingAlgorithm/0.1.3?timeout=300") // timeout is optional
+            // .pipe(input)
+            // .then(function(response) {
+            //     pairList = [];
+            //     obj = response.get();
+            //     for (var key in obj) {
+            //         if (obj.hasOwnProperty(key)) {
+            //             pairList.push({
+            //                 interviewee: key,
+            //                 interviewer: obj[key]
+            //             })
+            //         }
+            //     }
+            //     event = _.assign(event, {"pairing": pairList})
+            //     event.save().then(event => {
+            //         res.send(event);
+            //     }).catch(err => res.status(404).send(err));
+            // });
         })
         
     }).catch((e) => {
