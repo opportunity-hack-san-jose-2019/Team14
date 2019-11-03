@@ -1,17 +1,9 @@
-import {
-    Component,
-    OnInit,
-    ViewChild,
-    NgModule
-  } from '@angular/core';
-  
-  import {
-    MatTable
-  } from '@angular/material/table';
-  import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
+import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import Axios from 'axios';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Axios from 'axios';
   
   @Component({
     selector: 'app-announcement-page',
@@ -21,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   
   export class AnnouncementPageComponent implements OnInit {
   
-    @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
+    @ViewChild('eventTable', {static: false}) eventTable: MatTable <any> ;
     currentUser : any;
     eventList: [Object]
     displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
@@ -69,5 +61,4 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         console.log(e)
       });
     }
-  }
-  
+  } 
