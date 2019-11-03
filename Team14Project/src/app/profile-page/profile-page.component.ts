@@ -38,7 +38,7 @@ export class ProfilePageComponent implements OnInit {
   interestScale = 0;
 
   // Table columns
-  displayedColumns: string[] = ['title', 'location', 'time', 'action'];
+  displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
   constructor(private router: Router) {}
 
