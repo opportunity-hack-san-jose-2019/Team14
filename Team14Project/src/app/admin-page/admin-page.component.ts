@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import axios from 'axios';
 
 @Component({
   selector: 'app-admin-page',
@@ -15,7 +15,19 @@ export class AdminPageComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar, private router: Router) { }
 
+  volunteers: any;
+
   ngOnInit() {
+    if(this.getAuth().username != 'Admin' || this.getAuth().password != 'Admin') {
+      this.router.navigateByUrl('/');
+    }
+
+    axios.get('https://obscure-badlands-88487.herokuapp.com/volunteer/all')
+      .then(response => {
+        this.volunteers = response.data.volunteers;
+        console.log(response.data.volunteers);
+      })
+      .catch(err => this.snackBar.open(err));
   }
 
   events = [
@@ -36,6 +48,7 @@ export class AdminPageComponent implements OnInit {
   eventTime = '';
 
   logOut() {
+    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 
@@ -60,8 +73,24 @@ export class AdminPageComponent implements OnInit {
     } else {
       this.events.unshift(event);
       this.eventTable.renderRows();
+      this.eventTitle = '';
+      this.eventLocation = '';
+      this.eventTime = '';
     }
   }
 
   displayedColumns: string[] = ['title', 'location', 'time', 'action'];
+
+  getAuth() {
+    var auth = {
+      username: window.atob(localStorage.getItem('user')).split(":")[0],
+      password: window.atob(localStorage.getItem('user')).split(":")[1]
+    }
+
+    return auth;
+  }
+
+  showVolunteerInfo(volunteer) {
+    alert(JSON.stringify(volunteer));
+  }
 }

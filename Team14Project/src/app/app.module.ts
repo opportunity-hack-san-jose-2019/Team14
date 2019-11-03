@@ -18,7 +18,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -42,7 +42,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatGridListModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

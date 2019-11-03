@@ -7,7 +7,16 @@ import {
 import {
   MatTable
 } from '@angular/material/table';
-import { Router } from '@angular/router';
+
+import axios from 'axios';
+
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import {
+  Observable
+} from 'rxjs';
 
 @Component({
   selector: 'app-profile-page',
@@ -16,14 +25,22 @@ import { Router } from '@angular/router';
 })
 export class ProfilePageComponent implements OnInit {
 
-  @ViewChild('eventTable', {static: false}) eventTable: MatTable < any > ;
+  @ViewChild('eventTable', {
+    static: false
+  }) eventTable: MatTable < any > ;
+  state: Observable < object > ;
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  constructor(private router: Router) {}
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      console.log(params.user);
+    }); 
 
-  ngOnInit() {}
+  }
 
   isVolunteer = false;
+
   data = [{
       title: 'Mentor event',
       location: 'San Jose',
@@ -67,6 +84,16 @@ export class ProfilePageComponent implements OnInit {
   }
 
   logOut() {
+    localStorage.clear();
     this.router.navigateByUrl('/');
+  }
+
+  getAuth() {
+    var user = {
+      email: window.atob(localStorage.getItem('user')).split(":")[0],
+      password: window.atob(localStorage.getItem('user')).split(":")[1]
+    }
+
+    return user;
   }
 }

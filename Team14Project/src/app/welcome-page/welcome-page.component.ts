@@ -1,6 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import axios from 'axios';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
+import {
+  Router, NavigationExtras
+} from '@angular/router';
+import {
+  state
+} from '@angular/animations';
 
 
 @Component({
@@ -10,9 +21,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class WelcomePageComponent implements OnInit {
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   ngOnInit() {
+    console.log(this.getAuth());
+    if (localStorage.getItem('user') != null) {
+      axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', this.getAuth())
+        .then(response => {
+          if (response.status == 200) {
+            this.router.navigateByUrl('/profilePage');
+          }
+        });
+    }
   }
 
   appName = 'Braven';
@@ -34,26 +54,72 @@ export class WelcomePageComponent implements OnInit {
 
   signUp() {
     var student = {
-      first: this.firstName,
-      last: this.lastName,
-      password: this.password,
-      email: this.email
+      full_name: this.firstName + " " + this.lastName,
+      password: window.btoa(this.password),
+      email: this.email,
+      cohort: 'None',
+      evening: 'Tuesday',
+      location: this.location,
+      phone: this.phone,
+      module_score: 0,
+      project_score: 0,
+      bonus: null,
+      total_score: 0
     }
 
-    if(!this.firstName || !this.lastName || !this.password || !this.email) {
+    if (!this.firstName || !this.lastName || !this.password || !this.email) {
       this.snackBar.open('All fields are required!', 'OK', {
         duration: 2000
       });
     } else {
       axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
-      .then(response => console.log(response.data))
-      .catch(err => {
-        this.snackBar.open(err, 'OK', {
-          duration: 2000
+        .then(response => {
+          this.snackBar.open('Success!', 'OK', {
+            duration: 2000
+          });
+          this.isRegistering = !this.isRegistering;
+        })
+        .catch(err => {
+          this.snackBar.open(err, 'OK', {
+            duration: 2000
+          });
         });
-      });
+    }
+  }
+
+  signIn() {
+    var auth = {
+      email: this.email,
+      password: window.btoa(this.password)
     }
 
-    console.log(student);
+    var success = false;
+
+    axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', auth)
+      .then(response => {
+        if (response.status == 200) {
+          localStorage.setItem('user', window.btoa(auth.email + ":" + auth.password));
+
+          let navigationExtras: NavigationExtras = {
+            queryParams: {
+              user: response.data
+            }
+          };
+
+          this.router.navigate(["profilePage"], navigationExtras);
+        }
+      })
+      .catch(err => this.snackBar.open('Wrong credentials', 'OK', {
+        duration: 2000
+      }));
+  }
+
+  getAuth() {
+    var user = {
+      email: window.atob(localStorage.getItem('user')).split(":")[0],
+      password: window.atob(localStorage.getItem('user')).split(":")[1]
+    }
+
+    return user;
   }
 }

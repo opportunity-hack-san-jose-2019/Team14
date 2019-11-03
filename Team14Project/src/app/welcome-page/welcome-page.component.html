@@ -50,7 +50,7 @@
     <input [(ngModel)]="password" class="inputField" type="password" matInput placeholder="Password">
   </mat-form-field>
 
-  <button mat-button>Sign In</button>
+  <button mat-button (click)="signIn();">Sign In</button>
 
   <hr>
   <button mat-stroked-button (click)="toggleRegistration();">I don't have an account</button>
