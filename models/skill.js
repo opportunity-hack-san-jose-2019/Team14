@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const SkillSchema = {
-    name: {
+    skill_name: {
         type: String,
-        required: true,
         unique: true
     }
-}
+};
 
 var Skill = mongoose.model('Skill', SkillSchema);
 
