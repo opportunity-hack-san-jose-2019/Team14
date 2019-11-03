@@ -1,61 +1,128 @@
 const express = require('express');
 const router = express.Router();
+const { Event } = require('../models/event');
+const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
+const _ = require('lodash');
 
 router.get('/', (req, res) => {
-    console.log('volunteers');
-    res.send('volunteers');
+    console.log('events');
+    res.send('events');
 });
 
 router.get('/all', (req, res) => {
-    Volunteer.find().then((volunteers) => {
-      res.send({volunteers});
+    Event.find().then((events) => {
+      res.send({events});
     }).catch((e) =>{
       res.status(400).send();
     });
-  });
+});
 
-router.post('/register', (req, res) => {
-    let volunteer = new Volunteer({
-        first: req.body.first,
-        last: req.body.last,
-        password: req.body.password,
-        email: req.body.email,
-        full_name: req.body.full_name,
-        phone: req.body.phone,
-        cancelled: req.body.cancelled,
-        notes: req.body.notes,
-        vip: req.body.vip,
-        station: req.body.station,
-        day: req.body.day,
-        event_location: req.body.event_location,
-        employer: req.body.employer,
-        title_industry: req.body.title_industry,
-        city_state: req.body.city_state,
-        career_fields: req.body.career_fields
-    });
-    volunteer.save().then((volunteer) => {
-        res.send({volunteer});
+router.get('/info', (req, res) => {
+    Event.findOne({
+        _id: req.query.id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+        res.send(event);
     }).catch((e) => {
-        res.status(400).send();
+        res.status(404).send(e);
+    })
+});
+
+router.post('/create', (req, res) => {
+    let event = new Event({
+        title: req.body.title,
+        description: req.body.description,
+        time: req.body.time,
+        location: req.body.location,
+    });
+    event.save().then((event) => {
+        res.send(event);
+    }).catch((e) => {
+        res.status(404).send(e);
     });
 });
 
-
-router.post('/signin', (req, res) => {
-    Volunteer.findOne({
-        email: req.body.email,
-        password: req.body.password
-    }).then((volunteer) => {
-        if (!volunteer) {
+router.post('/update', (req, res) => {
+    Event.findOne({
+        _id: req.query.id,
+    }).then((event) => {
+        if (!event) {
             return res.status(404).send({
-                error: "User not found"
+                error: "Event not found"
             });
         }
-
-        res.send(volunteer);
+        event = _.assign(event, req.body);
+        event.save().then((event) => {
+            res.send({event});
+        }).catch((e) => {
+            res.status(400).send(e);
+            console.log(e)
+        });
     }).catch((e) => {
         res.status(404).send(e);
+    })
+});
+
+router.post('/join', (req, res) => {
+    var { event_id, user_role, user_email } = req.body;
+    
+    if (event_id === undefined || user_role === undefined || user_email === undefined){
+        return res.status(404).send({
+            error: "Unable to join"
+        });
+    }
+
+    var eventUpdatePromise = Event.findOne({
+        _id: event_id,
+    }).then((event) => {
+        if (!event) {
+            return Promise.reject(new Error("Event not found"));
+        }
+        var user_list = user_role === "student" ? event.students : event.volunteers;
+        if (_.find(user_list, {email: user_email})) {
+            return Promise.reject(new Error("User already joined"));
+        }
+        user_list.push({
+            email: user_email
+        });
+        event = _.assign(event, {
+            [user_role === "student"? "students" : "volunteers"]:user_list
+        });
+        return event.save();
+    }).catch((e) => {
+        return Promise.reject(e);
+    })
+
+    var userModel = user_role === "student" ? Student : Volunteer;
+    var userUpdatePromise = userModel.findOne({
+        email: user_email,
+    }).then((user) => {
+        if (!user) {
+            return Promise.reject(new Error("User not found"));
+        }
+        var { event_list } = user;
+        if (event_list.includes(event_id)){
+            return Promise.reject(new Error("User already joined"));
+        }
+        event_list.push(event_id);
+        user = _.assign(user, {
+            event_list
+        });
+        return user.save();
+    }).catch((e) => {
+        return Promise.reject(e);
+    })
+
+    Promise.all([eventUpdatePromise, userUpdatePromise]).then(() => {
+        res.send({status:"Success"});
+    }).catch(e => {
+        res.status(404).send({status:"Failed", message:e.message});
+        console.log(e)
     })
 });
 

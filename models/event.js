@@ -21,10 +21,10 @@ const EventSchema = {
         type: String,
     },
     students: {
-        type: [Object], // student_id, status
+        type: [Object], // email, status
     },
     volunteers: {
-        type: [Object], // volunteer_id, status
+        type: [Object], // email, status
     },
 };
 

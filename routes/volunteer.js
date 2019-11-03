@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const _ = require('lodash');
 const { Volunteer } = require('../models/volunteer');
 
 router.get('/', (req, res) => {
@@ -36,7 +37,7 @@ router.post('/register', (req, res) => {
         obj = JSON.parse(req.body.career_fields[i])
         career_list.push(obj)
     }
-    let voluteer = new Voluteer({
+    let volunteer = new Volunteer({
         first: req.body.first,
         last: req.body.last,
         password: req.body.password,
