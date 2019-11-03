@@ -132,7 +132,7 @@ router.post('/update', (req, res) => {
 });
 
 router.get('/pair', (req, res) => {
-    var { event_id } = req.body;
+    var { event_id } = req.query.eventId;
     Event.findOne({
         _id: event_id,
     }).then((event) => {
@@ -178,29 +178,6 @@ router.get('/pair', (req, res) => {
                     res.send(event);
                 });
             });
-            var input = {
-                group1: values[0],
-                group2: values[1]
-            }
-            // Algorithmia.client("simZ80aiR3ONCezNfyywCkml54i1")
-            // .algo("matching/DatingAlgorithm/0.1.3?timeout=300") // timeout is optional
-            // .pipe(input)
-            // .then(function(response) {
-            //     pairList = [];
-            //     obj = response.get();
-            //     for (var key in obj) {
-            //         if (obj.hasOwnProperty(key)) {
-            //             pairList.push({
-            //                 interviewee: key,
-            //                 interviewer: obj[key]
-            //             })
-            //         }
-            //     }
-            //     event = _.assign(event, {"pairing": pairList})
-            //     event.save().then(event => {
-            //         res.send(event);
-            //     }).catch(err => res.status(404).send(err));
-            // });
         })
         
     }).catch((e) => {

@@ -86,7 +86,7 @@
     <ng-container matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef>Details</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="warn" (click)="router.navigateByUrl('/event')">Details</button>
+        <button mat-raised-button color="warn" (click)="router.navigate(['event'], { state: { eventId: element._id } });">Details</button>
       </td>
     </ng-container>
 
