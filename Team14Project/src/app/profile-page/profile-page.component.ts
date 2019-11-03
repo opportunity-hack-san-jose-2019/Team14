@@ -38,6 +38,8 @@ export class ProfilePageComponent implements OnInit {
   objectKeys = Object.keys;
   events = [];
 
+  API = 'https://obscure-badlands-88487.herokuapp.com';
+
   // Adding interests
   isAddingInterest = false;
   interestName = '';
@@ -62,7 +64,7 @@ export class ProfilePageComponent implements OnInit {
       .then(userObject => {
         this.user = userObject;
         for (var i = 0; i < this.user.event_list.length; i++) {
-          axios.get('https://obscure-badlands-88487.herokuapp.com/event/info', {
+          axios.get(this.API + '/event/info', {
             params: {
               id: this.user.event_list[i]
             }
@@ -75,7 +77,7 @@ export class ProfilePageComponent implements OnInit {
         this.getAttendingEvents();
       }).catch(err => this.router.navigateByUrl('/'));
 
-    axios.get('https://obscure-badlands-88487.herokuapp.com/skill/all')
+    axios.get(this.API + '/skill/all')
       .then(response => {
         this.interestList = response.data.skill;
       });
@@ -90,7 +92,7 @@ export class ProfilePageComponent implements OnInit {
   getAttendingEvents() {
     console.log(this.user)
     let userRole = this.userService.isStudent(this.user) ? 'students' : 'volunteers'
-    axios.get(`http://localhost:8080/event/attending?email=${this.user.email}&role=${userRole}`)
+    axios.get(this.API + `/event/attending?email=${this.user.email}&role=${userRole}`)
       .then((events) => {
         this.attendingEventsList = events.data;
         console.log(events)
@@ -120,7 +122,7 @@ export class ProfilePageComponent implements OnInit {
         duration: 2000
       });
     } else {
-      axios.post('https://obscure-badlands-88487.herokuapp.com/skill/update', interest)
+      axios.post(this.API + '/skill/update', interest)
         .then(response => {
           this.userService.getCurrentUser().then(userObj => this.user = userObj)
           .catch(err => this.router.navigateByUrl('/'));
@@ -139,7 +141,20 @@ export class ProfilePageComponent implements OnInit {
 
     // axios post to move element
 
-    axios.post('https://obscure-badlands-88487.herokuapp.com/event/create', element)
+    axios.post(this.API + '/event/create', element)
+      .then(response => console.log(response))
+      .catch(err => console.warn(err));
+
+    var body = {
+      event_id: element._id,
+      user_email: this.user.email,
+      user_role: this.user.interests === undefined ? 'Volunteer' : 'Student'
+    }
+
+    console.log(element);
+    console.log(body);
+
+    axios.post(this.API + '/event/remove', body)
       .then(response => console.log(response))
       .catch(err => console.warn(err));
   }

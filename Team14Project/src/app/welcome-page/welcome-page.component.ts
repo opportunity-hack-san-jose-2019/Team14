@@ -26,7 +26,7 @@ export class WelcomePageComponent implements OnInit {
   ngOnInit() {
     console.log(this.getAuth());
     if (localStorage.getItem('user') != null) {
-      axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', this.getAuth())
+      axios.post(this.API + '/student/signin', this.getAuth())
         .then(response => {
           if (response.status == 200) {
             this.router.navigateByUrl('/profile');
@@ -46,6 +46,8 @@ export class WelcomePageComponent implements OnInit {
   phone = '';
   location = '';
   password = '';
+
+  API = "https://obscure-badlands-88487.herokuapp.com";
 
 
   toggleRegistration() {
@@ -72,7 +74,7 @@ export class WelcomePageComponent implements OnInit {
         duration: 2000
       });
     } else {
-      var path = this.isVolunteer ? 'https://obscure-badlands-88487.herokuapp.com/volunteer/register' : 'https://obscure-badlands-88487.herokuapp.com/student/register';
+      var path = this.isVolunteer ? this.API + '/volunteer/register' : this.API + '/student/register';
       axios.post(path, student)
         .then(response => {
           this.snackBar.open('Success!', 'OK', {
@@ -96,7 +98,7 @@ export class WelcomePageComponent implements OnInit {
 
     var success = false;
 
-    axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', auth)
+    axios.post(this.API + '/student/signin', auth)
       .then(response => {
         if (response.status == 200) {
           localStorage.setItem('user', window.btoa(auth.email + ":" + auth.password));
