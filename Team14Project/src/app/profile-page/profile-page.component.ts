@@ -132,4 +132,15 @@ export class ProfilePageComponent implements OnInit {
       this.isAddingInterest = !this.isAddingInterest;
     }
   }
+
+  unregister(element) {
+    this.events.splice(this.events.indexOf(element), 1);
+    this.eventTable.renderRows();
+
+    // axios post to move element
+
+    axios.post('https://obscure-badlands-88487.herokuapp.com/event/create', element)
+      .then(response => console.log(response))
+      .catch(err => console.warn(err));
+  }
 }

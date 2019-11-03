@@ -53,6 +53,8 @@
   <hr>
 
   <h1 class="text-center">Events you are participating in ({{ events.length }})</h1>
+  <h2 class="text-center" *ngIf="events.length == 0">There are no any events yet</h2>
+
   <table *ngIf="events.length != 0" #eventTable mat-table [dataSource]="events" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
@@ -86,7 +88,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="warn">Unregister</button>
+        <button mat-raised-button color="warn" (click)="unregister(element);">Unregister</button>
       </td>
     </ng-container>
 
