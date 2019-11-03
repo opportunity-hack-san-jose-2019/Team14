@@ -55,6 +55,9 @@ const VolunteerSchema = {
     },
     event_list: {
         type: [ObjectId]
+    },
+    notifications: {
+        type: [ObjectId],
     }
 };
 

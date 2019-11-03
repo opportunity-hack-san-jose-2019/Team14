@@ -52,6 +52,9 @@ const StudentSchema = {
     },
     event_list: {
         type: [ObjectId]
+    },
+    notifications: {
+        type: [ObjectId], // type, seen, checked, metadata
     }
 };
 
