@@ -1,6 +1,7 @@
 import csv
 import json
 import requests
+import random
 
 class Person:
     def __init__(self, full_name, first_name, last_name, cohort, evening, location, phone, email, interests, attendence, module_score, project_score, bonus, total_score):
@@ -37,6 +38,11 @@ class Volunteer:
         self.city_state = city_state
         self.career_fields = career_fields
 
+class Skill:
+    def __init__(self, name):
+        self.skill_name = name
+        self.skill_level = random.randint(1, 10)
+
 
 with open('volunteers.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -49,9 +55,9 @@ with open('volunteers.csv') as csv_file:
             full_name = row[0]
             email = row[1]
             phone = row[2]
-            cancelled = row[3]
+            cancelled = True if row[3] == "TRUE" else False
             notes = row[4]
-            vip = row[5]
+            vip = True if row[5] == "TRUE" else False
             station = row[6]
             day = row[7]
             event_location = row[8]
@@ -59,14 +65,14 @@ with open('volunteers.csv') as csv_file:
             title_industry = row[10]
             city_state = row[11]
             career_fields = row[12]
-            career_fields = [i.strip() for i in career_fields.split(';')]
+            career_fields = [json.dumps(Skill(i.strip()).__dict__) for i in career_fields.split(';')]
             career_fields.pop()
             print(career_fields)
             volunteer = Volunteer(full_name,email,phone,cancelled,notes,vip,station,day,event_location,employer,title_industry,city_state,career_fields)
-            print(json.dumps(volunteer.__dict__))
+            # print(json.dumps(volunteer.__dict__))
             answers = json.loads(json.dumps(volunteer.__dict__))
-            # r = requests.post('http://localhost:8080/student/register', json=answers)
-            # print(r.status_code)
+            r = requests.post('http://localhost:8080/volunteer/register', json=answers)
+            print(r.status_code)
             line_count += 1
 
 
@@ -106,4 +112,3 @@ with open('volunteers.csv') as csv_file:
 #             r = requests.post('http://localhost:8080/student/register', json=answers)
 #             print(r.status_code)
 #             line_count += 1
-    # print(f'Processed {line_count} lines.')

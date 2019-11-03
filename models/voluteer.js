@@ -51,13 +51,13 @@ const VoluteerSchema = {
         type: String,
     },
     career_fields: {
-        type: [String]
+        type: Array
     },
     event_list: {
         type: [ObjectId]
     }
 };
 
-var Voluteer = mongoose.model('Voluteer', VoluteerSchema);
+var Voluteer = mongoose.model('Volunteer', VoluteerSchema);
 
 module.exports = { Voluteer, VoluteerSchema };
