@@ -100,9 +100,10 @@ export class WelcomePageComponent implements OnInit {
         if (response.status == 200) {
           localStorage.setItem('user', window.btoa(auth.email + ":" + auth.password));
 
+          console.log(response.data)
           let navigationExtras: NavigationExtras = {
             queryParams: {
-              user: response.data
+              user: JSON.stringify(response.data)
             }
           };
 

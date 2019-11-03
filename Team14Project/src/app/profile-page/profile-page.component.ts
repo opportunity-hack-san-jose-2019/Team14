@@ -25,63 +25,24 @@ import {
 })
 export class ProfilePageComponent implements OnInit {
 
-  @ViewChild('eventTable', {
-    static: false
-  }) eventTable: MatTable < any > ;
-  state: Observable < object > ;
+  @ViewChild('eventTable', { static: false }) eventTable: MatTable < any > ;
+  user: Object;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params.user);
+      this.user = JSON.parse(params.user);
+      console.log(this.user);
     }); 
 
   }
 
   isVolunteer = false;
 
-  data = [{
-      title: 'Mentor event',
-      location: 'San Jose',
-      time: '6.00pm November 10'
-    },
-    {
-      title: 'School event',
-      location: 'San Francisco',
-      time: '2.30pm November 17'
-    },
-    {
-      title: 'Mentor event',
-      location: 'San Jose',
-      time: '6.00pm November 10'
-    },
-    {
-      title: 'School event',
-      location: 'San Francisco',
-      time: '2.30pm November 17'
-    },
-    {
-      title: 'Mentor event',
-      location: 'San Jose',
-      time: '6.00pm November 10'
-    },
-    {
-      title: 'School event',
-      location: 'San Francisco',
-      time: '2.30pm November 17'
-    }
-  ];
-
   appName = 'Braven';
 
   displayedColumns: string[] = ['title', 'location', 'time', 'action'];
-
-  unregister(event) {
-    this.data.splice(this.data.indexOf(event), 1);
-
-    this.eventTable.renderRows();
-  }
 
   logOut() {
     localStorage.clear();
