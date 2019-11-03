@@ -103,4 +103,26 @@ router.post('/update', (req, res) => {
     })
 });
 
+router.post('/addeditskill', (req, res) => {
+    Student.findOne({
+        email: req.query.email,
+    }).then((student) => {
+        if (!student) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+        req.body.interests = req.body.interests.concat(student.interests);
+        student = _.assign(student, req.body);
+        student.save().then((student) => {
+            res.send({student});
+        }).catch((e) => {
+            res.status(404).send();
+            console.log(e)
+        });
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 module.exports = router;
