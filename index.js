@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 app.use('/student', require('./routes/student'));
 app.use('/volunteer', require('./routes/volunteer'));
 app.use('/event', require('./routes/event'));
+app.use('/skill', require('./routes/skill'));
 
 app.listen(port, () => {
     console.log(`app is listening on port ${port}`);
