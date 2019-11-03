@@ -133,6 +133,7 @@ router.post('/update', (req, res) => {
 });
 
 router.get('/pair', (req, res) => {
+    console.log(req.query.eventId)
     Event.findOne({
         _id: new ObjectId(req.query.eventId),
     }).then((event) => {
