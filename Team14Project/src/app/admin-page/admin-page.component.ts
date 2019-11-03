@@ -17,19 +17,21 @@ export class AdminPageComponent implements OnInit {
 
   volunteers: any;
 
+  API = "https://obscure-badlands-88487.herokuapp.com";
+
   ngOnInit() {
     if(this.getAuth().email != 'admin@gmail.com' || this.getAuth().password != window.btoa('admin')) {
       this.router.navigateByUrl('/');
     }
 
-    axios.get('https://obscure-badlands-88487.herokuapp.com/volunteer/all')
+    axios.get(this.API + '/volunteer/all')
       .then(response => {
         this.volunteers = response.data.volunteers;
         console.log(response.data.volunteers);
       })
       .catch(err => this.snackBar.open(err));
 
-    axios.get('https://obscure-badlands-88487.herokuapp.com/event/all')
+    axios.get(this.API + '/event/all')
       .then(response => this.events = response.data.events);
   }
 
@@ -72,7 +74,7 @@ export class AdminPageComponent implements OnInit {
       });
     } else {
 
-      axios.post('https://obscure-badlands-88487.herokuapp.com/event/create', event)
+      axios.post(this.API + '/event/create', event)
         .then(response => console.log(response));
 
       this.events.push(event);
