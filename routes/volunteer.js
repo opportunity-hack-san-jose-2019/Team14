@@ -13,7 +13,22 @@ router.get('/all', (req, res) => {
     }).catch((e) =>{
       res.status(400).send();
     });
-  });
+});
+
+router.get('/profile', (req, res) => {
+    Volunteer.findOne({
+        email: req.query.email,
+    }).then((volunteer) => {
+        if (!volunteer) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+        res.send(volunteer);
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
 
 router.post('/register', (req, res) => {
     let volunteer = new Volunteer({
@@ -40,7 +55,6 @@ router.post('/register', (req, res) => {
         res.status(400).send();
     });
 });
-
 
 router.post('/signin', (req, res) => {
     Volunteer.findOne({
