@@ -117,6 +117,9 @@ export class ProfilePageComponent implements OnInit {
       skill_level: this.interestScale
     }
 
+    this.user.interests.unshift(interest);
+    this.interestTable.renderRows();
+
     if (!this.interestName) {
       this.snackBar.open('All fields are required!', 'OK', {
         duration: 2000
@@ -124,7 +127,7 @@ export class ProfilePageComponent implements OnInit {
     } else {
       axios.post(this.API + '/skill/update', interest)
         .then(response => {
-          this.userService.getCurrentUser().then(userObj => this.user = userObj)
+          this.userService.getCurrentUser().then(userObj => console.log(userObj))
           .catch(err => this.router.navigateByUrl('/'));
         });
 
