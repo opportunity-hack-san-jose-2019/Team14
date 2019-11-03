@@ -75,7 +75,6 @@ export class ProfilePageComponent implements OnInit {
           }).then(response => {
             this.events.push(response.data);
             this.eventTable.renderRows();
-            this.showSuccessSnackbar();
           });
         }
 
@@ -85,9 +84,7 @@ export class ProfilePageComponent implements OnInit {
     axios.get(this.API + '/skill/all')
       .then(response => {
         this.interestList = response.data.skill;
-        this.showSuccessSnackbar();
       });
-
   }
 
   logOut() {
