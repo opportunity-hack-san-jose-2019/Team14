@@ -16,6 +16,7 @@ router.get('/all', (req, res) => {
   });
 
 router.post('/register', (req, res) => {
+    console.log(req)
     let student = new Student({
         full_name: req.body.full_name,
         first: req.body.first,
@@ -37,6 +38,7 @@ router.post('/register', (req, res) => {
         res.send({student});
     }).catch((e) => {
         res.status(400).send();
+        console.log(e)
     });
 });
 

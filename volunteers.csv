@@ -1,0 +1,114 @@
+full_name,email,phone,cancelled,notes,vip,station,day,event_location,employer,title_industry,city_state,career_fields
+Achidi Sama,,,TRUE,,FALSE,Station 11,Wednesday,PayPal,LinkedIn,Technical Recruiter,"San Jose, CA",Engineering; Technology;
+Alan Fritzler,,,FALSE,,FALSE,Station 15,Tuesday,SJSU,LinkedIn,"Team Lead, Policy Research & Insights",San Francisco,Public Relations; Management; Communications; Technology
+Alisa Grange,,,TRUE,,FALSE,Station 16,Tuesday,SJSU,Neuralink,HR,San Francisco,Engineering; Communications; Human Resources; Management;
+Allison Meyers,,,FALSE,,FALSE,Station 1,Tuesday,PayPal,Adobe,Business Partner Associate Program Manager,San Jose,Business; Management;
+Amanda Vandenberg,,,FALSE,,TRUE,Station 7,Tuesday,SJSU,Binc,Technical Recruiter,"San Jose, CA",Technology; Engineering;
+Amir Jenkins,,,FALSE,,FALSE,Station 29,Tuesday,SJSU,LinkedIn,Product Operations,"San Jose, CA",Operations; Management
+Amna Qamar,,,FALSE,,FALSE,Station 19,Wednesday,PayPal,Schaffer&Combs,Senior Associate,,Marketing; Accounting; Finance;
+Angela Estrella,,,FALSE,,FALSE,Station 22,Tuesday,PayPal,Stanford GSE,Instructional Coach,"San Jose, CA",Public Relations; Education; Business;
+Anya Bida,,,FALSE,,TRUE,Station 24,Wednesday,SJSU,Salesforce,Lead Member of Technical Staff - SRE,"Palo Alto, CA",Technology; Engineering;
+Audre Broers,,,TRUE,,FALSE,Station 19,Tuesday,SJSU,Salesforce,Renewals Manager,"Palo Alto, Ca",Sales; Finance; Business; Marketing;
+Beat Hutter,,,FALSE,,TRUE,Station 16,Tuesday,PayPal,PayPal,"Director, Product Analytics",,Management;
+Benjamin Charrow,,,FALSE,,FALSE,Station 23,Wednesday,PayPal,Waymo,Staff Software Engineer,"Mountain View, CA",Engineering;
+Blair Feldman,,,FALSE,,FALSE,Station 30,Wednesday,SJSU,Stanford University School of Medicine,Division Manager,San Jose,Management;
+Brad Mears,,,FALSE,,FALSE,Station 15,Tuesday,PayPal,PayPal,Engineering Program Manager,,Engineering;
+Cameron Redublo,,,FALSE,,FALSE,Station 14,Tuesday,PayPal,PayPal,IT Support Technician,,Technology; Engineering;
+Caroline Charrow,,,FALSE,,FALSE,Station 8,Wednesday,PayPal,Khan Academy,International Operations Manager,Mountain View,Management;
+Catherine Uong,,,TRUE,,FALSE,Station 26,Tuesday,SJSU,Summit Public Schools,"Manager, Development & Partnerships",San Jose,Management; Education;
+Cecilia Lopez,,,FALSE,,FALSE,Station 13,Wednesday,PayPal,PwC,Assurance Manager,"San Jose, CA",Business; Finance; Management;
+Cesar Zaragoza,,,FALSE,,FALSE,Station 18,Tuesday,SJSU,Ryder,Account Manager,"San Jose, CA",
+Charles Anderson,,,TRUE,,FALSE,Station 3,Tuesday,SJSU,Airbnb,Systems IT Manager,"San Francisco, CA",Technology; Engineering;
+Chelsea Scahill,,,FALSE,,FALSE,Station 4,Tuesday,SJSU,Balance Staffing,Corporate Recruiter,Stockton,
+Cheryle Custer,,,TRUE,,FALSE,Station 6,Wednesday,SJSU,Confluent,"Director, Marketing","Palo Alto, CA",Marketing;
+Chiara Dorigo,,,FALSE,,FALSE,Station 18,Wednesday,PayPal,Schaffer&Combs,Senior Associate,,Marketing; Accounting; Finance;
+Chris Dedow,,,FALSE,,TRUE,Station 5,Tuesday,PayPal,LinkedIn,Senior Financial Analyst,Sunnyvale,Finance; Business; Accounting;
+Chris Peng,,,TRUE,,FALSE,Station 22,Wednesday,SJSU,Rally Health,Software Engineer,San Jose,Engineering;
+Chris Reynolds,,,FALSE,,FALSE,Station 16,Wednesday,SJSU,Google,Senior Program Manager,San Jose,Management;
+Christina Rivera,,,TRUE,,FALSE,Station 29,Tuesday,SJSU,TSE,Recruitment Consultant,"San Francisco, CA",
+Connor Foody,,,FALSE,,FALSE,Station 8,Wednesday,SJSU,Facebook,Engineer,"Menlo park, ca",Engineering;
+Daman Ahluwalia,,,FALSE,,FALSE,Station 24,Wednesday,PayPal,Adobe,Senior Financial Analyst,San Jose,Finance; Business; Marketing
+Dan Porter,,,FALSE,,TRUE,Station 19,Tuesday,PayPal,QMA,Principal (Sales and Client Service),,Sales;
+Danyang Feng,,,FALSE,,FALSE,Station 14,Wednesday,SJSU,Google,Program Manager,San Jose,Management;
+Dave Mayhan,,,FALSE,,TRUE,Station 20,Wednesday,PayPal,Schaffer&Combs,Senior Director,,Marketing; Accounting; Finance;
+Deborah Jiminez,,,FALSE,,FALSE,Station 28,Wednesday,SJSU,Self-Employed,"Finance, Accounting",,Finance; Business; Accounting;
+Dennis Cruz,,,TRUE,,FALSE,Station 4,Wednesday,SJSU,Balance Staffing,Account Executive,San Jose,
+Dionne Gayle,,,FALSE,,FALSE,Station 2,Wednesday,PayPal,Adobe,Senior Business Solution Analyst,San Jose,Business;
+Elizabeth Slavitt,,,FALSE,,FALSE,Station 12,Tuesday,SJSU,Early-stage startup,Founder,"Mountain View, CA",Marketing; Education;
+Elliot Fiske,,,FALSE,,FALSE,Station 26,Wednesday,SJSU,Salesforce,Software Engineer,"Palo Alto, CA",Engineering;
+Emilio Rivera,,,FALSE,,FALSE,Station 3,Wednesday,PayPal,Binc,Recruiter,South San Francisco,
+Emily Rudge,,,FALSE,,FALSE,Station 21,Tuesday,PayPal,QMA,Executive assistant and office manager,,Management;
+Ernesto Soltero,,,FALSE,,FALSE,Station 10,Wednesday,SJSU,Facebook,Software Engineer,"Palo Alto, CA",Engineering;
+Eugene Ishchuk,,,FALSE,,FALSE,Station 29,Wednesday,SJSU,Ssential Supplies,Owner,"Castro Valley, CA",Marketing; Management; Business; Technology;
+Home Schultz,,,TRUE,,FALSE,Station 11,Wednesday,SJSU,Facebook,"Survey Insights Partner, People Analytics",Redwood City,Technology;
+Ike Backstrom,,,TRUE,,FALSE,---,Tuesday,PayPal,PayPal,"Program Manager, Regional Engagement",,Management;
+Jay Staples,,,FALSE,,FALSE,Station 9,Tuesday,PayPal,PayPal,"Risk Analyst, Product Policy",,Business; Finance;
+Jessi Carrier,,,TRUE,,FALSE,Station 5,Tuesday,SJSU,Binc,Associate Recruiter,"Berkeley, CA",
+Jessica Mederos,,,FALSE,,FALSE,Station 3,Wednesday,SJSU,Alpha: Cindy Avitia High School,School Counselor/College Counselor,"San Jose, CA",Education; Public Relations;
+Jiaxian Cai,,,FALSE,,FALSE,Station 1,Wednesday,SJSU,Accenture,Application Support Analyst,"Mountain View,CA",
+Jing Osborn,,,FALSE,,FALSE,Station 17,Tuesday,SJSU,PwC,Experienced Associate,"San Jose, CA",
+John Bottenberg,,,FALSE,,FALSE,Station 15,Wednesday,PayPal,QMA,Developer (Software systems),San Francisco,Software Engineering; Finance;
+John Drexler,,,FALSE,,FALSE,Station 23,Wednesday,SJSU,Ronin Venture Partners,HR/OD Consultant,"Cupertino, CA",
+Jon Pham,,,FALSE,,FALSE,Station 9,Tuesday,SJSU,Binc,Associate Program Manager,San Jose,
+Juan Munoz,,,FALSE,,FALSE,Station 18,Wednesday,SJSU,Intel,Research Scientist,"San Jose, CA",Technology;
+Jules Setnicker,,,FALSE,,FALSE,Station 4,Wednesday,PayPal,Binc,Technical Recruiter,San Jose,Engineering; Technology;
+Julia David,,,TRUE,,FALSE,---,Tuesday,PayPal,PayPal,"Manager, PP Gives",,Management;
+Katie Upton,,,TRUE,,TRUE,---,Wednesday,PayPal,Binc,Recruiter,"Sunnyvale, CA",
+Kerri Quinn,,,FALSE,,FALSE,Station 20,Tuesday,PayPal,QMA,Assistant Portfolio Manager,,Management;
+Ketan Gadkari,,,FALSE,,FALSE,Station 5,Wednesday,SJSU,Commscope,Engineering Manager,"Santa Clara, CA",Engineering; Management;
+Kevin Orlando Rodezno Polanco,,,FALSE,,FALSE,Station 1,Wednesday,PayPal,Accenture,Management Consulting Senior Analyst,,Business; Technology; Management;
+Khush Sharma,,,FALSE,,TRUE,Station 8,Tuesday,PayPal,PayPal,"Manager, HR Business Partner",,Human Resources; Technology; Business; Management;
+Kimberly Nevin,,,FALSE,,FALSE,Station 5,Wednesday,PayPal,Blendid,Executive Recruiter,"Sunnyvale, CA",Human Resources; Recruiting;
+Kirsten Burton,,,FALSE,,TRUE,Station 16,Wednesday,PayPal,QMA,Principal (Sales and Client Service),San Francisco,Human Resources; Finance;
+Kurt Atherton,,,FALSE,,FALSE,Station 23,Tuesday,SJSU,Selfhelpworks,President,"San Jose, CA",
+Kyle Barry,,,FALSE,,FALSE,Station 3,Tuesday,PayPal,Facebook,Engineering Manager,"Fremont, CA",Engineering; Technology; Management;
+Laura Torres,,,FALSE,,TRUE,Station 13,Wednesday,SJSU,Facebook,University Recruiter,"San Jose,CA",
+Lauren Koehler,,,FALSE,,FALSE,Station 2,Wednesday,SJSU,Alpha Public Schools,Director of Strategy,San Jose,Education; Management;
+Lawrence Ramirez,,,FALSE,,FALSE,Station 10,Tuesday,SJSU,Boys and Girls Club of the Peninsula (BGCP),"Director, Talent Acquisition & Volunteer Services","Menlo Park, CA",
+Linda Berger,,,FALSE,,FALSE,Station 27,Wednesday,SJSU,Santa Clara Unified SD,Teacher Leader/Coach,Santa Clara,Education; Management; Communications;
+Lindley Huynh,,,FALSE,,FALSE,Station 17,Wednesday,SJSU,Independent Contractor (for Arternal CRM),UX Designer,,
+Lucy Ring,,,FALSE,,TRUE,Station 6,Tuesday,SJSU,Binc,Senior Recruiter,"Los Angeles, CA",
+Manickkam Pandian,,,FALSE,,FALSE,Station 10,Tuesday,PayPal,PayPal,Product Manager,,Management;
+Mansi Joshi,,,TRUE,,TRUE,Station 12,Wednesday,PayPal,Linkedin,"Senior Manager, Infrastructure Business Operations","Sunnyvale, CA",Business; Management;
+Matt Sorlien,,,FALSE,,FALSE,Station 19,Wednesday,SJSU,Menlo Education Advisors,Head of Program Management,,
+Matthew Diwata,,,TRUE,,FALSE,Station 9,Wednesday,PayPal,LinkedIn,"Sr. Auditor, SOX & NFD Compliance","Sunnyvale, CA",
+Matthew Martinez,,,FALSE,,FALSE,Station 6,Wednesday,PayPal,Blendid,Operations Manager,"Sunnyvale, CA",Management; Business;
+Megan Teplitsky,,,FALSE,,FALSE,Station 24,Tuesday,SJSU,Square,Channel Partner Manager,"San Francisco, CA",
+Meggie Schmidt Hollinger,,,FALSE,,TRUE,Station 15,Wednesday,SJSU,Google,Senior Program Manager,San Francisco,Management;
+Meredith Curry,,,FALSE,,FALSE,Station 2,Tuesday,SJSU,"AdvancED Consulting, LLC",Owner & Principal Consultant,"San Jose, CA",Non-profit; 
+Michelle Koo,,,TRUE,,FALSE,Station 27,Tuesday,SJSU,Sunnyvale School District,Middle School Teacher,"Sunnyvale, CA",Education; Communications;
+Mitesh Joshi,,,FALSE,,FALSE,Station 23,Tuesday,PayPal,Stripe,Software Consultant,,Technology;
+Mohan Sankaran,,,FALSE,,FALSE,Station 18,Tuesday,PayPal,PayPal,"Software Eng, PayPal Here",,Engineering;
+Monica Walls,,,FALSE,,TRUE,Station 21,Wednesday,PayPal,Schaffer&Combs,Senior Manager,,Marketing; Accounting; Finance;
+Nicole Lee,,,TRUE,,FALSE,---,Tuesday,SJSU,LinkedIn,User Experience Manager,"Sunnyvale, CA",
+Noha Rizk,,,FALSE,,FALSE,Station 13,Tuesday,PayPal,PayPal,"PM, Commerce Platform",,Management;
+Nydia Smith,,,TRUE,,FALSE,Station 21,Tuesday,SJSU,Santa Clara Co. Probation Dept.,Supervising Probation Officer,"San Jose, CA",
+Oscar Parra,,,TRUE,,FALSE,Station 13,Tuesday,SJSU,EZ Texting,Service Delivery Engineer,Los Angeles,Engineering; Technology;
+Paul Stephenson,,,FALSE,,FALSE,Station 10,Wednesday,PayPal,LinkedIn,Staff Infrastructure Business Operations Manager,"Sunnyvale, CA",Business; Management;
+Peter Thai,,,FALSE,,TRUE,Station 25,Wednesday,SJSU,Salesforce,Senior Project Lead,"San Jose, CA",
+PJ Nuqui,,,FALSE,,FALSE,Station 17,Tuesday,PayPal,PayPal,Sr. Risk Analyst,,Business; Finance;
+Prasanna Vengadam,,,FALSE,,FALSE,Station 14,Tuesday,SJSU,Laney College,English Instructor,"Oakland, CA",Education; English; Technology;
+Pratibha Rathore,,,FALSE,,FALSE,Station 7,Wednesday,SJSU,Facebook,Data Scientist,"Palo Alto, CA",
+Priya Balakrishnan,,,FALSE,,TRUE,Station 6,Tuesday,PayPal,PayPal,SR HR Data Scientist,,Human Resources; Technology;
+Ram Nagarajan,,,FALSE,,TRUE,Station 7,Wednesday,PayPal,Blendid,Vice President Business Operations,"Sunnyvale, CA",Business; Management;
+Ramesh Manian,,,TRUE,,FALSE,Station 20,Wednesday,SJSU,Palo Alto Networks,Sr Engineering Manager,San Jose,Engineering; Management;
+Rasana Anandan,,,FALSE,,FALSE,,Tuesday,PayPal,PayPal,Program Manager,San Jose ,Engineering; Management;
+Rebecca Cruz,,,FALSE,,FALSE,Station 12,Wednesday,SJSU,Facebook,PhD Recruiter,"Menlo Park, CA",
+Richard Dana,,,TRUE,,FALSE,---,Tuesday,SJSU,Binc,Recruiter,"San Jose, CA",
+Sandra Escajadillo,,,FALSE,,FALSE,Station 22,Wednesday,PayPal,Schaffer&Combs,Talent and Executive Search Fellow,,Recruiting; 
+Sarah Heraldo,,,TRUE,,FALSE,Station 11,Tuesday,SJSU,Course Hero,Recruiting Operations,"San Jose, CA",
+Saravanan Chidambaram,,,TRUE,,FALSE,Station 7,Tuesday,PayPal,PayPal,Lead BI and HR Reporting,,Human Resources; Technology;
+Seyedshahin Ashrafzadeh,,,FALSE,,FALSE,Station 20,Tuesday,SJSU,Salesforce,Software Engineer,Palo Alto,Engineering; Technology; Finance; Business;
+Siddhi Shah,,,TRUE,,FALSE,---,Wednesday,PayPal,Binc,Technical Recruiter,"Mountain View, CA",Human Resources;
+Sivakumar Murugesu,,,FALSE,,FALSE,Station 22,Tuesday,SJSU,SDL PLC,Senior Project Manager,Santa Clara,
+Sumitha Nathan,,,FALSE,,FALSE,Station 21,Wednesday,SJSU,PerimeterX,Head of Technical Business development,"San Mateo, CA",Business; Technology;
+Sunethra Dhileepan,,,TRUE,,FALSE,Station 11,Tuesday,PayPal,PayPal,Product Manager,,Management;
+Suzanne Ferris,,,TRUE,,FALSE,Station 25,Tuesday,SJSU,Stanford University,Assistant VP of HR for Business Affairs,"Stanford, CA",Business; Management; Education;
+Suzette Sandoval ,,,FALSE,,FALSE,Station 2,Tuesday,PayPal,Adobe,Talent Development Operations Coordinator,San Jose,Human Resources; Recruiting;
+Tarun Giri,,,FALSE,,FALSE,Station 12,Tuesday,PayPal,PayPal,Data Scientist,,Technology;
+Tyler Sauer,,,FALSE,,FALSE,Station 17,Wednesday,PayPal,QMA,Sales Team Support Analyst,San Francisco,Sales; Finance;
+Vanessa Compean,,,FALSE,,FALSE,Station 4,Tuesday,PayPal,LinkedIn,Product Operations Manager,"San Jose, CA",Management; Communications; Technology; Business;
+Will Lawrence,,,FALSE,,FALSE,Station 9,Wednesday,SJSU,Facebook,Product Manager,"Menlo Park, CA",Management;
+Yesenia Santos,,,FALSE,,FALSE,Station 28,Tuesday,SJSU,Target,Executive Team Lead Human Resources,"San Jose, CA",Human Resources;
+Yohana Nava Franco,,,FALSE,,FALSE,Station 14,Wednesday,PayPal,PwC,SALT Associate,"San Jose, CA",Business; Finance;
+Zahin Helal,,,FALSE,,FALSE,Station 8,Tuesday,SJSU,Binc,Technical Recruiter,"Los Gatos, CA",Technology; Engineering;
