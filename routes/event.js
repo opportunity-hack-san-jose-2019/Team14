@@ -95,22 +95,22 @@ router.post('/join', (req, res) => {
     
     if (event_id === undefined || user_role === undefined || user_email === undefined){
         return res.status(404).send({
-            error: "Unable to join"
+            error: "1.Unable to join"
         });
     }
 
-    var eventUpdatePromise = Event.findOne({
+    Event.findOne({
         _id: event_id,
     }).then((event) => {
         if (!event) {
-            res.status(404).send({
-                error: "Unable to join"
+            return res.status(404).send({
+                error: "2.Unable to join"
             });
         }
         var user_list = user_role === "students" ? event.students : event.volunteers;
         if (_.find(user_list, {email: user_email})) {
-            res.status(400).send({
-                error: "Unable to join"
+            return res.status(404).send({
+                error: "3.Unable to join"
             });
         } else {
             user_list.push({
@@ -123,29 +123,64 @@ router.post('/join', (req, res) => {
                 event = _.assign(event, {"volunteers": user_list})
             }
             
-            event.save().then(event => {
+            var doneSaveDB = event.save().then(event => {
                 var userModel = user_role === "students" ? Student : Volunteer;
-                userModel.findOne({
+                return userModel.findOne({
                     email: user_email,
                 }).then((user) => {
                     if (!user) {
-                        res.status(404).send({
-                            error: "Unable to join"
-                        });
+                        return Promise.reject(new Error("4. Unable to join"));
                     }
                     var { event_list } = user;
                     if (event_list.includes(event_id)){
-                        res.status(404).send(e);
+                        return Promise.reject(new Error("5. Unable to join"));
                     }
                     event_list.push(event_id);
                     user = _.assign(user, {
                         event_list
                     });
-                    user.save().then(user => res.send({user}));
+                    return user.save();
                 }).catch((e) => {
-                    return res.status(404).send(e)
+                    return Promise.reject(e);
                 })
             });
+
+            doneSaveDB.then(() => {
+                var eventGoogle = {
+                    'summary': event.title,
+                    'location': event.location,
+                    'description': event.description,
+                    'start': {
+                      'dateTime': event.start,
+                      'timeZone': 'America/Los_Angeles',
+                    },
+                    'end': {
+                      'dateTime': event.end,
+                      'timeZone': 'America/Los_Angeles',
+                    },
+                    'attendees': [{'email':user_email}],
+                    'reminders': {
+                      'useDefault': false,
+                      'overrides': [
+                        {'method': 'email', 'minutes': 24 * 60},
+                        {'method': 'popup', 'minutes': 10},
+                      ],
+                    },
+                };
+        
+                return send_calendar(eventGoogle, (err, eventRes) => {
+                    if (err){
+                        return Promise.reject(err)
+                    }
+                    else{
+                        return Promise.resolve(eventRes);
+                    }
+                });
+            }).then(eventRes => {
+                res.send({"status":"Success", "eventObject":eventRes});
+            }).catch(e => {
+                res.status(404).send({"status":"Fail", "message":'2 '+e.message});
+            })
         }
     }).catch((e) => {
         res.status(404).send(e);
