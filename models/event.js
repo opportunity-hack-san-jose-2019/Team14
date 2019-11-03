@@ -23,7 +23,7 @@ const EventSchema = {
     students: {
         type: [Object], // student_id, status
     },
-    voluteers: {
+    volunteers: {
         type: [Object], // volunteer_id, status
     },
 };
