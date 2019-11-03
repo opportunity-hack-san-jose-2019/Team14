@@ -148,11 +148,8 @@ export class ProfilePageComponent implements OnInit {
     var body = {
       event_id: element._id,
       user_email: this.user.email,
-      user_role: this.user.interests === undefined ? 'Volunteer' : 'Student'
+      user_role: this.user.interests === undefined ? 'volunteer' : 'student'
     }
-
-    console.log(element);
-    console.log(body);
 
     axios.post(this.API + '/event/remove', body)
       .then(response => console.log(response))
