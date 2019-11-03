@@ -50,6 +50,11 @@ export class AdminPageComponent implements OnInit {
     this.eventTable.renderRows();
   }
 
+  pairUsers(event) {
+    this.events.splice(this.events.indexOf(event), 1);
+    this.eventTable.renderRows();
+  }
+
   addEvent() {
     var event = {
       title: this.eventTitle,
@@ -79,7 +84,7 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-  displayedColumns: string[] = ['title', 'location', 'time', 'action'];
+  displayedColumns: string[] = ['title', 'location', 'time', 'pairing', 'action'];
 
   getAuth() {
     var auth = {

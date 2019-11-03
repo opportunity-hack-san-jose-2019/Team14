@@ -48,6 +48,12 @@
       <td mat-cell *matCellDef="let element"> {{element.time}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="pairing">
+      <th mat-header-cell *matHeaderCellDef>Pair Users</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="warn" (click)="pairUsers(element);">Pair</button>
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
