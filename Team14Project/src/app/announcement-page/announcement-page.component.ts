@@ -40,7 +40,7 @@ import Axios from 'axios';
         this.eventList = events.data;
       }).catch((e) => {
         console.log(e)
-      })
+      });
 
     }
   
