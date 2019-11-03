@@ -5,6 +5,7 @@ const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
 const { Notification } = require('../models/notification');
 const { send_calendar } = require('../google/send_calendar');
+var Algorithmia = require("algorithmia");
 const _ = require('lodash');
 
 router.get('/', (req, res) => {
@@ -128,34 +129,60 @@ router.post('/update', (req, res) => {
     })
 });
 
-router.post('/addpair', (req, res) => {
-    const { event_id, round, volunteer_email, student_email } = req.body;
+router.get('/pair', (req, res) => {
+    var { event_id } = req.body;
+    var students
     Event.findOne({
         _id: event_id,
     }).then((event) => {
         if (!event) {
-            res.status(404).send({
+            return res.status(404).send({
                 error: "Event not found"
             });
         }
-        if (!event.pairing){
-            event.pairing = [];
-        }
-        event.pairing.push({
-            round,
-            volunteer_email,
-            student_email
-        });
-        event.save().then((event) => {
-            res.send({event});
-        }).catch((e) => {
-            res.status(404).send(e);
-            console.log(e)
-        });
+        res.send(event);
     }).catch((e) => {
         res.status(404).send(e);
     })
 });
+
+router.post('/remove', (req, res) => {
+    var { event_id, user_email, user_role } = req.body;
+    Event.findOne({
+        _id: event_id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+        if (user_role === "student") {
+            event.students = _.remove(event.students, n => n.email === user_email);
+        }
+        else {
+            event.volunteers = _.remove(event.volunteers, n => n.email === user_email);
+        }
+        event.save().then(() => {
+            var userModel = user_role === "student" ? Student : Volunteer;
+            userModel.findOne({email: user_email}).then(user => {
+                user.event_list = _.remove(user.event_list, n => n === event_id);
+                user.save().then(() => {
+                    res.send({"status":"Success"});
+                }).catch(e => {
+                    res.status(404).send(e);
+                })
+            }).catch(e => {
+                res.status(404).send(e);
+            })
+        }).catch(e => {
+            res.status(404).send(e);
+        })
+
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 
 router.post('/join', (req, res) => {
     var { event_id, user_role, user_email } = req.body;
