@@ -143,20 +143,33 @@ router.get('/pair', (req, res) => {
         students = Promise.all(event.students.map(item => {
             return Student.findOne({email:item.email}).then(student => {
                 return Promise.resolve({
-                    name: item.email, 
-                    interests: student.interests.map(interest => interest.skill_name)
+                    id: item.email, 
+                    interests: student.interests.map(interest => ({
+                        id: interest.skill_name
+                    })),
+                    interviewsDone: 0
                 });
             })
         }));
         volunteers = Promise.all(event.volunteers.map(item => {
             return Volunteer.findOne({email:item.email}).then(volunteer => {
                 return Promise.resolve({
-                    name: item.email, 
-                    interests: volunteer.career_fields.map(interest => interest.skill_name)
+                    id: item.email, 
+                    skills: volunteer.career_fields.map(interest => (
+                        {
+                            id: interest.skill_name,
+                            val: interest.skill_level
+                        }))
                 });
             });
         }));
         Promise.all([students, volunteers]).then(values => {
+            var studentsandvolunteers = {
+                students: values[0],
+                volunteers: values[1]
+            }
+            console.log(studentsandvolunteers);
+
             var input = {
                 group1: values[0],
                 group2: values[1]
@@ -178,7 +191,7 @@ router.get('/pair', (req, res) => {
                 event = _.assign(event, {"pairing": pairList})
                 event.save().then(event => {
                     res.send(event);
-                })
+                }).catch(err => res.status(404).send(err));
             });
         })
         
