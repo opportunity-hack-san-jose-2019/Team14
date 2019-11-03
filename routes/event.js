@@ -173,9 +173,10 @@ router.get('/pair', (req, res) => {
             axios.post('http://localhost:5000/getResult', studentsandvolunteers)
             .then(result => {
                 console.log(result);
-                event = _.assign(event, {"pairing": result.data})
+                event = _.assign(event, {"pairing": pairList})
                 event.save().then(event => {
                     res.send(event);
+                });
             });
             var input = {
                 group1: values[0],
