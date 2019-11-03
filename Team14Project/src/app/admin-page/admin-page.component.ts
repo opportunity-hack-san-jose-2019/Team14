@@ -18,7 +18,7 @@ export class AdminPageComponent implements OnInit {
   volunteers: any;
 
   ngOnInit() {
-    if(this.getAuth().username != 'Admin' || this.getAuth().password != 'Admin') {
+    if(this.getAuth().email != 'admin@gmail.com' || this.getAuth().password != 'admin') {
       this.router.navigateByUrl('/');
     }
 
@@ -83,7 +83,7 @@ export class AdminPageComponent implements OnInit {
 
   getAuth() {
     var auth = {
-      username: window.atob(localStorage.getItem('user')).split(":")[0],
+      email: window.atob(localStorage.getItem('user')).split(":")[0],
       password: window.atob(localStorage.getItem('user')).split(":")[1]
     }
 

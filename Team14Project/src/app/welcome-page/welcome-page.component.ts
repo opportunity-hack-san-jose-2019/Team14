@@ -100,14 +100,7 @@ export class WelcomePageComponent implements OnInit {
         if (response.status == 200) {
           localStorage.setItem('user', window.btoa(auth.email + ":" + auth.password));
 
-          console.log(response.data)
-          let navigationExtras: NavigationExtras = {
-            queryParams: {
-              user: JSON.stringify(response.data)
-            }
-          };
-
-          this.router.navigate(["profilePage"], navigationExtras);
+          this.router.navigateByUrl("/profilePage");
         }
       })
       .catch(err => this.snackBar.open('Wrong credentials', 'OK', {

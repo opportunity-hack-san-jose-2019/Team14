@@ -33,14 +33,18 @@ export class ProfilePageComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'location', 'time', 'action'];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.user = JSON.parse(params.user);
-      console.log(this.user);
-    }); 
-
+    axios.post('https://obscure-badlands-88487.herokuapp.com/student/signin', this.getAuth())
+      .then(response => {
+        if(response.status == 200) {
+          this.user = response.data;
+          console.log(response.data);
+        } else {
+          this.router.navigateByUrl('/');
+        }
+      })
   }
 
   logOut() {
