@@ -20,7 +20,17 @@ router.post('/register', (req, res) => {
         first: req.body.first,
         last: req.body.last,
         password: req.body.password,
-        email: req.body.email
+        email: req.body.email,
+        cancelled: req.body.cancelled,
+        notes: req.body.notes,
+        vip: req.body.vip,
+        station: req.body.station,
+        day: req.body.station,
+        event_location:req.body.event_location,
+        employer: req.body.employer,
+        title_industry: req.body.title_industry,
+        city_state: req.body.city_state,
+        career_fields: req.body.caree
     });
     voluteer.save().then((voluteer) => {
         res.send({voluteer});
