@@ -14,9 +14,6 @@ const NotificationSchema = {
     event_id: {
         type: ObjectId
     },
-    user_role: {
-        type: String
-    },
     user_email: {
         type: String
     },

@@ -3,6 +3,7 @@ const router = express.Router();
 const { Event } = require('../models/event');
 const { Student } = require('../models/student');
 const { Volunteer } = require('../models/volunteer');
+const { Notification } = require('../models/notification');
 const { send_calendar } = require('../google/send_calendar');
 const _ = require('lodash');
 
@@ -97,6 +98,7 @@ router.post('/join', (req, res) => {
             error: "Unable to join"
         });
     }
+
     var eventUpdatePromise = Event.findOne({
         _id: event_id,
     }).then((event) => {
@@ -123,7 +125,7 @@ router.post('/join', (req, res) => {
             
             event.save().then(event => {
                 var userModel = user_role === "students" ? Student : Volunteer;
-                var userUpdatePromise = userModel.findOne({
+                userModel.findOne({
                     email: user_email,
                 }).then((user) => {
                     if (!user) {
@@ -152,6 +154,59 @@ router.post('/join', (req, res) => {
 
 router.post('/sendinvitations', (req, res) => {
     var { event_id, emails } = req.body;
+
+    Event.findOne({
+        _id: event_id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+        var { title, description } = event;
+
+        var allEmailPromise = Promise.all(emails.map(async email => {
+            let notification = new Notification({
+                title: "You have been invited to participate in "+title,
+                description,
+                type: "Event Invitation",
+                event_id,
+                user_email: email,
+                seen: false,
+                checked: false
+            });
+            return notification.save()
+            .then(async noti => {
+                return Student.findOne({
+                    email,
+                }).then(async (student) => {
+                    student.notifications.push(noti._id);
+                    return student.save();
+                }).catch(async (e) => {
+                    return Volunteer.findOne({email}).then(async volunteer => {
+                        volunteer.notifications.push(noti._id);
+                        return volunteer.save();
+                    }).catch(async err => {
+                        return Promise.reject(err);
+                    })
+                })
+            }).catch(async err => {
+                return Promise.reject(err);
+            });
+        }));
+
+        allEmailPromise.then(() => {
+            res.send({"status":"Success"});
+        }).catch(err => {
+            return res.status(404).send(e);
+        })
+    }).catch((e) => {
+        return res.status(404).send(e);
+    })
+});
+
+router.post('/acceptinvitation', (req, res) => {
+    var { event_id, user_email, user_role } = req.body;
     Event.findOne({
         _id: event_id,
     }).then((eventFromDB) => {
@@ -182,7 +237,7 @@ router.post('/sendinvitations', (req, res) => {
               ],
             },
         };
-        
+
         send_calendar(event, (err, eventRes) => {
             if (err){
                 res.send({"status":"Fail", "message":e.message});
