@@ -41,6 +41,9 @@ export class ProfilePageComponent implements OnInit {
   // Table columns
   displayedColumns: string[] = ['title', 'location', 'description', 'time', 'action'];
 
+  // Interest columns
+  interestColumns: string[] = ['skill_name', 'skill_level'];
+
   // Interest list
   interestList = [];
 
@@ -80,7 +83,7 @@ export class ProfilePageComponent implements OnInit {
 
     console.log(interest);
 
-    axios.post('http://localhost:8080/skill/update', interest)
+    axios.post('https://obscure-badlands-88487.herokuapp.com/skill/update', interest)
       .then(response => {
         this.userService.getCurrentUser().then(userObj => this.user = userObj).catch(err => this.router.navigateByUrl('/'));
       });
