@@ -22,4 +22,8 @@ export class UserService  {
             });
         }
     }
+
+    async isStudent(user){
+        return user.vip === undefined ? true : false;
+    }
 }
