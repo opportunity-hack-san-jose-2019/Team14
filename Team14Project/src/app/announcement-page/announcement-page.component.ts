@@ -35,7 +35,7 @@ import Axios from 'axios';
     }
 
     getEvents() {
-      Axios.get('https://obscure-badlands-88487.herokuapp.com/event/upcoming')
+      Axios.get(`http://localhost:8080/event/upcoming?email=${this.currentUser.email}`)
       .then((events) => {
         this.eventList = events.data;
       }).catch((e) => {
@@ -46,9 +46,9 @@ import Axios from 'axios';
     ngOnInit() {
       this.userService.getCurrentUser().then((user) => {
         this.currentUser = user
+        this.getEvents()
       });
 
-      this.getEvents()
     }
   
     joinEvent(event) {
@@ -59,9 +59,10 @@ import Axios from 'axios';
         user_email: this.currentUser.email
       })
       .then((events) => {
-        this.eventList = events.data;
+        this.getEvents()
       }).catch((e) => {
         console.log(e)
+        this.getEvents()
       });
     }
   }

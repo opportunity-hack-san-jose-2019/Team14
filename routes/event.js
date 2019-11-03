@@ -23,24 +23,8 @@ router.get('/upcoming', (req, res) => {
     eventList = []
     Event.find().then((events) => {
         events.forEach((event) => {
-            if (new Date(Date.now()) < new Date(event.start)) {
-                eventList.push(event)
-            }  
-        });
-        eventList.sort((a, b) => {
-            Date.parse(a.start) - Date.parse(b.start)
-        });
-        res.send(eventList);
-    }).catch((e) =>{
-        res.status(400).send();
-    });
-});
-
-router.get('/upcoming/:email', (req, res) => {
-    eventList = []
-    Event.find().then((events) => {
-        events.forEach((event) => {
-            if (_.find(event.student, {email: req.params.email}) || _.find(event.volunteer, {email: req.params.email}) || new Date(Date.now()) >= new Date(event.start)) {
+            console.log(event)
+            if (_.find(event.students, {email: req.query.email}) || _.find(event.volunteers, {email: req.query.email}) || new Date(Date.now()) >= new Date(event.start)) {
                 return
             }
             eventList.push(event)
@@ -48,7 +32,7 @@ router.get('/upcoming/:email', (req, res) => {
         eventList.sort((a, b) => {
             Date.parse(a.start) - Date.parse(b.start)
         });
-        res.send(eventList);
+    res.send(eventList);
     }).catch((e) =>{
         res.status(400).send();
     });
