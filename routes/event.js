@@ -90,6 +90,35 @@ router.post('/update', (req, res) => {
     })
 });
 
+router.post('/addpair', (req, res) => {
+    const { id, round, volunteer_email, student_email } = req.body;
+    Event.findOne({
+        _id: id,
+    }).then((event) => {
+        if (!event) {
+            return res.status(404).send({
+                error: "Event not found"
+            });
+        }
+        if (!event.pairing){
+            event.pairing = [];
+        }
+        event.pairing.push({
+            round,
+            volunteer_email,
+            student_email
+        });
+        event.save().then((event) => {
+            res.send({event});
+        }).catch((e) => {
+            res.status(404).send(e);
+            console.log(e)
+        });
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 router.post('/join', (req, res) => {
     var { event_id, user_role, user_email } = req.body;
     
@@ -287,5 +316,7 @@ router.post('/acceptinvitation', (req, res) => {
         res.status(404).send(e);
     })
 });
+
+
 
 module.exports = router;
