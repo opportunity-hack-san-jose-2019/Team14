@@ -165,8 +165,20 @@ router.get('/pair', (req, res) => {
             .algo("matching/DatingAlgorithm/0.1.3?timeout=300") // timeout is optional
             .pipe(input)
             .then(function(response) {
-                console.log(response.get());
-                res.send(response.get());
+                pairList = [];
+                obj = response.get();
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        pairList.push({
+                            interviewer: key,
+                            intervieweee: obj[key]
+                        })
+                    }
+                }
+                event = _.assign(event, {"pairing": pairList})
+                event.save(event => {
+                    res.send(event);
+                })
             });
         })
         
