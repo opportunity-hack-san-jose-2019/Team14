@@ -57,4 +57,24 @@ router.post('/signin', (req, res) => {
     })
 });
 
+router.post('/update', (req, res) => {
+    Student.findOne({
+        email: req.query.email,
+    }).then((student) => {
+        if (!student) {
+            return res.status(404).send({
+                error: "User not found"
+            });
+        }
+
+        student.update(req.body, e => {
+            return res.status(404).send({
+                error: "Error updating information."
+            });
+        })
+    }).catch((e) => {
+        res.status(404).send(e);
+    })
+});
+
 module.exports = router;

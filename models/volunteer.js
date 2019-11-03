@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-const VoluteerSchema = {
+const VolunteerSchema = {
     email: {
         type: String,
         required: true,
@@ -51,13 +51,13 @@ const VoluteerSchema = {
         type: String,
     },
     career_fields: {
-        type: [String]
+        type: [Object]
     },
     event_list: {
         type: [ObjectId]
     }
 };
 
-var Voluteer = mongoose.model('Voluteer', VoluteerSchema);
+var Volunteer = mongoose.model('Volunteer', VolunteerSchema);
 
-module.exports = { Voluteer, VoluteerSchema };
+module.exports = { Volunteer, VolunteerSchema };
