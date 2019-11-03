@@ -10,18 +10,10 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 const TOKEN_PATH = './token.json';
 
 // Load client secrets from a local file.
-const g_calendar = (func_name, event, callback) => fs.readFile('./google/credentials.json', (err, content) => {
+const send_calendar = (event, callback) => fs.readFile('./google/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
-
-  var func_call;
-  if (func_name === 'send_event'){
-    func_call = send_event;
-  }
-  else {
-    func_call = watch_event;
-  }
   // Authorize a client with credentials, then call the Google Calendar API.
-  authorize(JSON.parse(content), (auth) => {func_call(auth, event,callback)});
+  authorize(JSON.parse(content), (auth) => {send_event(auth, event,callback)});
 });
 
 /**
@@ -88,13 +80,4 @@ function send_event(auth, event, callback) {
   }, callback);
 }
 
-function watch_event(auth, event, callback) {
-  const calendar = google.calendar({version: 'v3', auth});
-  calendar.events.watch({
-    auth: auth,
-    calendarId: 'primary',
-    resource: event
-  }, callback);
-}
-
-module.exports = { g_calendar };
+module.exports = { send_calendar };
