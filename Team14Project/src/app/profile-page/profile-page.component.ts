@@ -15,7 +15,12 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
-import { UserService } from './../services/user.service';
+import {
+  UserService
+} from './../services/user.service';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile-page',
@@ -28,6 +33,11 @@ export class ProfilePageComponent implements OnInit {
   @ViewChild('eventTable', {
     static: false
   }) eventTable: MatTable < any > ;
+  @ViewChild('interestTable', {
+    static: false
+  }) interestTable: MatTable < any > ;
+
+
   user: Object;
   isVolunteer = false;
   appName = 'Braven';
@@ -47,12 +57,12 @@ export class ProfilePageComponent implements OnInit {
   // Interest list
   interestList = [];
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-      this.userService.getCurrentUser()
-        .then(userObject => this.user = userObject)
-        .catch(err => this.router.navigateByUrl('/'));
+    this.userService.getCurrentUser()
+      .then(userObject => this.user = userObject)
+      .catch(err => this.router.navigateByUrl('/'));
 
     axios.get('https://obscure-badlands-88487.herokuapp.com/skill/all')
       .then(response => {
@@ -81,16 +91,20 @@ export class ProfilePageComponent implements OnInit {
       skill_level: this.interestScale
     }
 
-    console.log(interest);
-
-    axios.post('https://obscure-badlands-88487.herokuapp.com/skill/update', interest)
-      .then(response => {
-        this.userService.getCurrentUser().then(userObj => this.user = userObj).catch(err => this.router.navigateByUrl('/'));
+    if (!this.interestName) {
+      this.snackBar.open('All fields are required!', 'OK', {
+        duration: 2000
       });
-    
-    this.interestScale = 0;
-    this.interestName = '';
+    } else {
+      axios.post('https://obscure-badlands-88487.herokuapp.com/skill/update', interest)
+        .then(response => {
+          this.userService.getCurrentUser().then(userObj => this.user = userObj).catch(err => this.router.navigateByUrl('/'));
+        });
 
-    this.isAddingInterest = !this.isAddingInterest;
+      this.interestScale = 0;
+      this.interestName = '';
+
+      this.isAddingInterest = !this.isAddingInterest;
+    }
   }
 }
