@@ -1,7 +1,5 @@
-<mat-toolbar color="primary">
-  {{ appName }}
-  <span class="spacer"></span>
-</mat-toolbar>
+<app-toolbar pageName="{{ appName }}" color="primary">
+</app-toolbar>
 
 <!-- Container for registered users -->
 <div class="example-container text-center" *ngIf="isRegistering">

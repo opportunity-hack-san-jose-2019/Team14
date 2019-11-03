@@ -12,6 +12,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { AnnouncementPageComponent } from './announcement-page/announcement-page.component'
 import { MatTableModule } from '@angular/material/table';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -26,7 +28,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppComponent,
     ProfilePageComponent,
     WelcomePageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    ToolbarComponent,
+    AnnouncementPageComponent
   ],
   imports: [
     BrowserModule,
