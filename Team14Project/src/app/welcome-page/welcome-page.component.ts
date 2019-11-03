@@ -72,7 +72,8 @@ export class WelcomePageComponent implements OnInit {
         duration: 2000
       });
     } else {
-      axios.post('https://obscure-badlands-88487.herokuapp.com/student/register', student)
+      var path = this.isVolunteer ? 'https://obscure-badlands-88487.herokuapp.com/volunteer/register' : 'https://obscure-badlands-88487.herokuapp.com/student/register';
+      axios.post(path, student)
         .then(response => {
           this.snackBar.open('Success!', 'OK', {
             duration: 2000

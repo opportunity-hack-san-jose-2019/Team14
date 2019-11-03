@@ -26,7 +26,7 @@
     <mat-form-field class="example-full-width">
 
       <mat-label>Interest title</mat-label>
-      <mat-select style="color: #333;">
+      <mat-select style="color: #333;" [(ngModel)]="interestName">
         <mat-option *ngFor="let interest of interestList" [value]="interest.skill_name">
           {{interest.skill_name}}
         </mat-option>

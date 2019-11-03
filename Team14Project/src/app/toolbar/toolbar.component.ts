@@ -19,7 +19,8 @@ export class ToolbarComponent implements OnInit {
 
 
     logOut() {
-        this.router.navigateByUrl('/');
+      localStorage.clear();
+      this.router.navigateByUrl('/');
     }
 
 }
