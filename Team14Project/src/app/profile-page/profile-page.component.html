@@ -39,16 +39,29 @@
     <button mat-raised-button color="danger" (click)="addInterest();">Add</button>
   </div>
 
-  <ul class="text-center">
-    <li *ngFor="let interest of user.interests" style="list-style: none;">
-      <b>{{ interest.skill_name }} ---------- {{interest.skill_level}}</b>
-    </li>
-  </ul>
+  <br>
+
+  <table #interestTable mat-table [dataSource]="user.interests" style="margin: 0px auto;">
+
+    <ng-container matColumnDef="skill_name">
+      <th mat-header-cell *matHeaderCellDef>Skill name</th>
+      <td mat-cell *matCellDef="let element"> {{element.skill_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="skill_level">
+      <th mat-header-cell *matHeaderCellDef>Skill level</th>
+      <td mat-cell *matCellDef="let element"> {{element.skill_level}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="interestColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: interestColumns;"></tr>
+  </table>
 
   <hr>
 
   <h1 class="text-center">Events you are participating in ({{ user.event_list.length }})</h1>
-  <table #eventTable mat-table [dataSource]="user.event_list" style="margin: 0px auto;">
+  <table *ngIf="user.event_list != 0" #eventTable mat-table [dataSource]="user.event_list" style="margin: 0px auto;">
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Event title </th>
